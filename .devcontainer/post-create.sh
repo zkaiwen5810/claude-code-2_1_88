@@ -8,7 +8,7 @@ sudo chown -R "$(id -u)":"$(id -g)" \
   "$HOME/.claude" \
   "$HOME/.config" \
   "$HOME/.cache" \
-  "$HOME/.local/share" \
+  "$HOME/.local" \
   "$HOME/.persist"
 
 # Ensure persist directory exists
