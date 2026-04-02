@@ -13,5 +13,3 @@ RUN apt-get update && apt-get install -y \
     && rm -rf /var/lib/apt/lists/*
 
 RUN corepack enable && corepack prepare pnpm@latest --activate
-
-WORKDIR /workspaces/claude-code-2_1_88

@@ -6,7 +6,7 @@
     "context": "."
   },
 
-  "remoteUser": "vscode",
+  "remoteUser": "node",
   "updateRemoteUserUID": true,
 
   "workspaceMount": "source=claude-code-src,target=/workspaces/claude-code-2_1_88,type=volume",
@@ -26,22 +26,22 @@
   ],
 
   "mounts": [
-    "source=pnpm-store,target=/home/vscode/.pnpm-store,type=volume",
+    "source=pnpm-store,target=/home/node/.pnpm-store,type=volume",
 
-    "source=codex-home,target=/home/vscode/.codex,type=volume",
+    "source=codex-home,target=/home/node/.codex,type=volume",
 
-    "source=claude-home,target=/home/vscode/.claude,type=volume",
-    "source=claude-config,target=/home/vscode/.config/claude,type=volume",
-    "source=claude-cache,target=/home/vscode/.cache/claude,type=volume",
+    "source=claude-home,target=/home/node/.claude,type=volume",
+    "source=claude-config,target=/home/node/.config/claude,type=volume",
+    "source=claude-cache,target=/home/node/.cache/claude,type=volume",
 
-    "source=opencode-config,target=/home/vscode/.config/opencode,type=volume",
-    "source=opencode-share,target=/home/vscode/.local/share/opencode,type=volume",
+    "source=opencode-config,target=/home/node/.config/opencode,type=volume",
+    "source=opencode-share,target=/home/node/.local/share/opencode,type=volume",
 
-    "source=claude-code-persist,target=/home/vscode/.persist,type=volume"
+    "source=claude-code-persist,target=/home/node/.persist,type=volume"
   ],
 
   "containerEnv": {
-    "PNPM_STORE_DIR": "/home/vscode/.pnpm-store",
+    "PNPM_STORE_DIR": "/home/node/.pnpm-store",
     "SHELL": "/usr/bin/zsh"
   },
 
