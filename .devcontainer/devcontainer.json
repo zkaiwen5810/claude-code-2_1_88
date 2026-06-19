@@ -3,7 +3,7 @@
 
   "build": {
     "dockerfile": "Dockerfile",
-    "context": "."
+    "context": ".",
   },
 
   "remoteUser": "node",
@@ -16,16 +16,16 @@
     "ghcr.io/zkaiwen5810/features/ai-coding-cli:latest": {
       "nodeMajor": "20",
       "installZsh": true,
-      "installZshrc": true
-    }
+      "installZshrc": true,
+    },
   },
 
-  "runArgs": [
-    "--env-file",
-    "${localWorkspaceFolder}/.devcontainer.env"
-  ],
+  "runArgs": ["--env-file", "${localWorkspaceFolder}/.devcontainer.env"],
 
   "mounts": [
+    "source=${localEnv:USERPROFILE}/.ssh,target=/home/node/.ssh,type=bind,readonly",
+    "source=${localEnv:USERPROFILE}/.gitconfig,target=/home/node/.gitconfig,type=bind,readonly",
+
     "source=pnpm-store,target=/home/node/.pnpm-store,type=volume",
 
     "source=codex-home,target=/home/node/.codex,type=volume",
@@ -37,13 +37,13 @@
     "source=opencode-config,target=/home/node/.config/opencode,type=volume",
     "source=opencode-share,target=/home/node/.local/share/opencode,type=volume",
 
-    "source=claude-code-persist,target=/home/node/.persist,type=volume"
+    "source=claude-code-persist,target=/home/node/.persist,type=volume",
   ],
 
   "containerEnv": {
     "PNPM_STORE_DIR": "/home/node/.pnpm-store",
-    "SHELL": "/usr/bin/zsh"
+    "SHELL": "/usr/bin/zsh",
   },
 
-  "postCreateCommand": "bash .devcontainer/post-create.sh"
+  "postCreateCommand": "bash -lc 'cd /workspaces/claude-code-2_1_88 && bash /tmp/post-create.sh'",
 }

@@ -1,0 +1,145 @@
+diff --git a/.devcontainer/Dockerfile b/.devcontainer/Dockerfile
+index 5ef5652..4265623 100644
+--- a/.devcontainer/Dockerfile
++++ b/.devcontainer/Dockerfile
+@@ -1,5 +1,8 @@
+ FROM mcr.microsoft.com/devcontainers/javascript-node:22
+ 
++RUN sed -i 's|http://deb.debian.org/debian|https://mirrors.tuna.tsinghua.edu.cn/debian|g' /etc/apt/sources.list.d/debian.sources \
++    && sed -i 's|http://deb.debian.org/debian-security|https://mirrors.tuna.tsinghua.edu.cn/debian-security|g' /etc/apt/sources.list.d/debian.sources
++
+ RUN apt-get update && apt-get install -y \
+     build-essential \
+     python3 \
+@@ -13,4 +16,13 @@ RUN apt-get update && apt-get install -y \
+     bubblewrap \
+     && rm -rf /var/lib/apt/lists/*
+ 
++# npm/pnpm/yarn/corepack
++ENV NPM_CONFIG_REGISTRY=https://registry.npmmirror.com/
++
+ RUN corepack enable && corepack prepare pnpm@latest --activate
++
++# Copy devcontainer bootstrap script into image.
++COPY post-create.sh /tmp/post-create.sh
++
++RUN sed -i 's/\r$//' /tmp/post-create.sh \
++  && chmod +x /tmp/post-create.sh
+diff --git a/.devcontainer/devcontainer.json b/.devcontainer/devcontainer.json
+index 79da3e5..1927f1d 100644
+--- a/.devcontainer/devcontainer.json
++++ b/.devcontainer/devcontainer.json
+@@ -1,49 +1,46 @@
+ {
+-  "name": "claude-code-2.1.88",
++    "name": "claude-code-2.1.88",
+ 
+-  "build": {
+-    "dockerfile": "Dockerfile",
+-    "context": "."
+-  },
++    "build": {
++        "dockerfile": "Dockerfile",
++        "context": "."
++    },
+ 
+-  "remoteUser": "node",
+-  "updateRemoteUserUID": true,
++    "remoteUser": "node",
++    "updateRemoteUserUID": true,
+ 
+-  "workspaceMount": "source=claude-code-src,target=/workspaces/claude-code-2_1_88,type=volume",
+-  "workspaceFolder": "/workspaces/claude-code-2_1_88",
++    "workspaceMount": "source=claude-code-src,target=/workspaces/claude-code-2_1_88,type=volume",
++    "workspaceFolder": "/workspaces/claude-code-2_1_88",
+ 
+-  "features": {
+-    "ghcr.io/zkaiwen5810/features/ai-coding-cli:latest": {
+-      "nodeMajor": "20",
+-      "installZsh": true,
+-      "installZshrc": true
+-    }
+-  },
++    "features": {
++        "ghcr.io/zkaiwen5810/features/ai-coding-cli:latest": {
++            "nodeMajor": "20",
++            "installZsh": true,
++            "installZshrc": true
++        }
++    },
+ 
+-  "runArgs": [
+-    "--env-file",
+-    "${localWorkspaceFolder}/.devcontainer.env"
+-  ],
++    "runArgs": ["--env-file", "${localWorkspaceFolder}/.devcontainer.env"],
+ 
+-  "mounts": [
+-    "source=pnpm-store,target=/home/node/.pnpm-store,type=volume",
++    "mounts": [
++        "source=pnpm-store,target=/home/node/.pnpm-store,type=volume",
+ 
+-    "source=codex-home,target=/home/node/.codex,type=volume",
++        "source=codex-home,target=/home/node/.codex,type=volume",
+ 
+-    "source=claude-home,target=/home/node/.claude,type=volume",
+-    "source=claude-config,target=/home/node/.config/claude,type=volume",
+-    "source=claude-cache,target=/home/node/.cache/claude,type=volume",
++        "source=claude-home,target=/home/node/.claude,type=volume",
++        "source=claude-config,target=/home/node/.config/claude,type=volume",
++        "source=claude-cache,target=/home/node/.cache/claude,type=volume",
+ 
+-    "source=opencode-config,target=/home/node/.config/opencode,type=volume",
+-    "source=opencode-share,target=/home/node/.local/share/opencode,type=volume",
++        "source=opencode-config,target=/home/node/.config/opencode,type=volume",
++        "source=opencode-share,target=/home/node/.local/share/opencode,type=volume",
+ 
+-    "source=claude-code-persist,target=/home/node/.persist,type=volume"
+-  ],
++        "source=claude-code-persist,target=/home/node/.persist,type=volume"
++    ],
+ 
+-  "containerEnv": {
+-    "PNPM_STORE_DIR": "/home/node/.pnpm-store",
+-    "SHELL": "/usr/bin/zsh"
+-  },
++    "containerEnv": {
++        "PNPM_STORE_DIR": "/home/node/.pnpm-store",
++        "SHELL": "/usr/bin/zsh"
++    },
+ 
+-  "postCreateCommand": "bash .devcontainer/post-create.sh"
+-}
+\ No newline at end of file
++    "postCreateCommand": "bash -lc 'cd /workspaces/claude-code-2_1_88 && bash /tmp/post-create.sh'"
++}
+diff --git a/.devcontainer/post-create.sh b/.devcontainer/post-create.sh
+index d4faa02..c61eee0 100644
+--- a/.devcontainer/post-create.sh
++++ b/.devcontainer/post-create.sh
+@@ -11,6 +11,18 @@ sudo chown -R "$(id -u)":"$(id -g)" \
+   "$HOME/.local" \
+   "$HOME/.persist"
+ 
++# Install a dedicated Codex launcher for cases where the container itself is the
++# intended isolation boundary and nested bwrap sandboxing is not available.
++LOCAL_BIN_DIR="$HOME/.local/bin"
++mkdir -p "$LOCAL_BIN_DIR"
++cat > "$LOCAL_BIN_DIR/codex-dfa" <<'EOF'
++#!/usr/bin/env bash
++set -euo pipefail
++
++exec /usr/local/bin/codex --sandbox danger-full-access "$@"
++EOF
++chmod 0755 "$LOCAL_BIN_DIR/codex-dfa"
++
+ # Ensure persist directory exists
+ PERSIST_DIR="$HOME/.persist"
+ mkdir -p "$PERSIST_DIR"
+@@ -28,4 +40,4 @@ fi
+ if [ ! -L "$TARGET_FILE" ]; then
+   rm -f "$TARGET_FILE"
+   ln -s "$PERSIST_FILE" "$TARGET_FILE"
+-fi
+\ No newline at end of file
++fi
