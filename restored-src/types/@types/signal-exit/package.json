@@ -1,0 +1,12 @@
+{
+    "name": "@types/signal-exit",
+    "version": "4.0.0",
+    "description": "Stub TypeScript definitions entry for signal-exit, which provides its own types definitions",
+    "main": "",
+    "scripts": {},
+    "license": "MIT",
+    "dependencies": {
+        "signal-exit": "*"
+    },
+    "deprecated": "This is a stub types definition. signal-exit provides its own type definitions, so you do not need this installed."
+}

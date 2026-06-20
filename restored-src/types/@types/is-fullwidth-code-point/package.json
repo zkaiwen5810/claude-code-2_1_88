@@ -1,0 +1,14 @@
+{
+    "name": "@types/is-fullwidth-code-point",
+    "version": "3.0.0",
+    "typings": null,
+    "description": "Stub TypeScript definitions entry for is-fullwidth-code-point, which provides its own types definitions",
+    "main": "",
+    "scripts": {},
+    "author": "",
+    "repository": "https://github.com/sindresorhus/is-fullwidth-code-point",
+    "license": "MIT",
+    "dependencies": {
+        "is-fullwidth-code-point": "*"
+    }
+}

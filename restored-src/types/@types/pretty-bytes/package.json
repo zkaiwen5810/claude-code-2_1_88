@@ -1,0 +1,14 @@
+{
+    "name": "@types/pretty-bytes",
+    "version": "5.2.0",
+    "typings": null,
+    "description": "Stub TypeScript definitions entry for pretty-bytes, which provides its own types definitions",
+    "main": "",
+    "scripts": {},
+    "author": "",
+    "repository": "https://github.com/sindresorhus/pretty-bytes",
+    "license": "MIT",
+    "dependencies": {
+        "pretty-bytes": "*"
+    }
+}

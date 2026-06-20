@@ -1,0 +1,12 @@
+{
+    "name": "@types/ansi-regex",
+    "version": "5.0.4",
+    "description": "Stub TypeScript definitions entry for ansi-regex, which provides its own types definitions",
+    "main": "",
+    "scripts": {},
+    "license": "MIT",
+    "dependencies": {
+        "ansi-regex": "*"
+    },
+    "deprecated": "This is a stub types definition. ansi-regex provides its own type definitions, so you do not need this installed."
+}

@@ -1,0 +1,14 @@
+{
+    "name": "@types/string-width",
+    "version": "4.0.1",
+    "typings": null,
+    "description": "Stub TypeScript definitions entry for string-width, which provides its own types definitions",
+    "main": "",
+    "scripts": {},
+    "author": "",
+    "repository": "https://github.com/sindresorhus/string-width",
+    "license": "MIT",
+    "dependencies": {
+        "string-width": "*"
+    }
+}

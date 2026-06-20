@@ -1,0 +1,12 @@
+{
+    "name": "@types/base64-js",
+    "version": "1.5.0",
+    "description": "Stub TypeScript definitions entry for base64-js, which provides its own types definitions",
+    "main": "",
+    "scripts": {},
+    "license": "MIT",
+    "dependencies": {
+        "base64-js": "*"
+    },
+    "deprecated": "This is a stub types definition. base64-js provides its own type definitions, so you do not need this installed."
+}

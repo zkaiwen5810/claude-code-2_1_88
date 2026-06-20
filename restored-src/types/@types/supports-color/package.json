@@ -1,0 +1,12 @@
+{
+    "name": "@types/supports-color",
+    "version": "10.0.0",
+    "description": "Stub TypeScript definitions entry for supports-color, which provides its own types definitions",
+    "main": "",
+    "scripts": {},
+    "license": "MIT",
+    "dependencies": {
+        "supports-color": "*"
+    },
+    "deprecated": "This is a stub types definition. supports-color provides its own type definitions, so you do not need this installed."
+}

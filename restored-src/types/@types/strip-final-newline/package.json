@@ -1,0 +1,12 @@
+{
+    "name": "@types/strip-final-newline",
+    "version": "4.0.0",
+    "description": "Stub TypeScript definitions entry for strip-final-newline, which provides its own types definitions",
+    "main": "",
+    "scripts": {},
+    "license": "MIT",
+    "dependencies": {
+        "strip-final-newline": "*"
+    },
+    "deprecated": "This is a stub types definition. strip-final-newline provides its own type definitions, so you do not need this installed."
+}

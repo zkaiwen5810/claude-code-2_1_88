@@ -1,0 +1,12 @@
+{
+    "name": "@types/figures",
+    "version": "3.0.3",
+    "description": "Stub TypeScript definitions entry for figures, which provides its own types definitions",
+    "main": "",
+    "scripts": {},
+    "license": "MIT",
+    "dependencies": {
+        "figures": "*"
+    },
+    "deprecated": "This is a stub types definition. figures provides its own type definitions, so you do not need this installed."
+}

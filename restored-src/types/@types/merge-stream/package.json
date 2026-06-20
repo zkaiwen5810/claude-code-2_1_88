@@ -1,0 +1,42 @@
+{
+    "name": "@types/merge-stream",
+    "version": "2.0.0",
+    "description": "TypeScript definitions for merge-stream",
+    "homepage": "https://github.com/DefinitelyTyped/DefinitelyTyped/tree/master/types/merge-stream",
+    "license": "MIT",
+    "contributors": [
+        {
+            "name": "Keita Kagurazaka",
+            "githubUsername": "k-kagurazaka",
+            "url": "https://github.com/k-kagurazaka"
+        },
+        {
+            "name": "Tom X. Tobin",
+            "githubUsername": "tomxtobin",
+            "url": "https://github.com/tomxtobin"
+        },
+        {
+            "name": "Daniel Zazula",
+            "githubUsername": "daniel-zazula",
+            "url": "https://github.com/daniel-zazula"
+        },
+        {
+            "name": "Daniel Cassidy",
+            "githubUsername": "djcsdy",
+            "url": "https://github.com/djcsdy"
+        }
+    ],
+    "main": "",
+    "types": "index.d.ts",
+    "repository": {
+        "type": "git",
+        "url": "https://github.com/DefinitelyTyped/DefinitelyTyped.git",
+        "directory": "types/merge-stream"
+    },
+    "scripts": {},
+    "dependencies": {
+        "@types/node": "*"
+    },
+    "typesPublisherContentHash": "e64d0d5cce369ca6badb8fa73b0d0d6ae5dee9b085f406ea908137def99c9cfd",
+    "typeScriptVersion": "4.8"
+}

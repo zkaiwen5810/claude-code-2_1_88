@@ -1,0 +1,27 @@
+{
+    "name": "@types/isexe",
+    "version": "2.0.4",
+    "description": "TypeScript definitions for isexe",
+    "homepage": "https://github.com/DefinitelyTyped/DefinitelyTyped/tree/master/types/isexe",
+    "license": "MIT",
+    "contributors": [
+        {
+            "name": "BendingBender",
+            "githubUsername": "BendingBender",
+            "url": "https://github.com/BendingBender"
+        }
+    ],
+    "main": "",
+    "types": "index.d.ts",
+    "repository": {
+        "type": "git",
+        "url": "https://github.com/DefinitelyTyped/DefinitelyTyped.git",
+        "directory": "types/isexe"
+    },
+    "scripts": {},
+    "dependencies": {
+        "@types/node": "*"
+    },
+    "typesPublisherContentHash": "edde7bded19eac62a4470250fda45ec73a6381a9cc630de49b65d31caff45da3",
+    "typeScriptVersion": "4.5"
+}

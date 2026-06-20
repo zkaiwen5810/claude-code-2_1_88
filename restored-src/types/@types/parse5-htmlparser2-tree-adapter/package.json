@@ -1,0 +1,12 @@
+{
+    "name": "@types/parse5-htmlparser2-tree-adapter",
+    "version": "7.0.0",
+    "description": "Stub TypeScript definitions entry for parse5-htmlparser2-tree-adapter, which provides its own types definitions",
+    "main": "",
+    "scripts": {},
+    "license": "MIT",
+    "dependencies": {
+        "parse5-htmlparser2-tree-adapter": "*"
+    },
+    "deprecated": "This is a stub types definition. parse5-htmlparser2-tree-adapter provides its own type definitions, so you do not need this installed."
+}

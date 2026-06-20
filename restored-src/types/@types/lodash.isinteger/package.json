@@ -1,0 +1,32 @@
+{
+    "name": "@types/lodash.isinteger",
+    "version": "4.0.9",
+    "description": "TypeScript definitions for lodash.isinteger",
+    "homepage": "https://github.com/DefinitelyTyped/DefinitelyTyped/tree/master/types/lodash.isinteger",
+    "license": "MIT",
+    "contributors": [
+        {
+            "name": "Brian Zengel",
+            "githubUsername": "bczengel",
+            "url": "https://github.com/bczengel"
+        },
+        {
+            "name": "Ilya Mochalov",
+            "githubUsername": "chrootsu",
+            "url": "https://github.com/chrootsu"
+        }
+    ],
+    "main": "",
+    "types": "index.d.ts",
+    "repository": {
+        "type": "git",
+        "url": "https://github.com/DefinitelyTyped/DefinitelyTyped.git",
+        "directory": "types/lodash.isinteger"
+    },
+    "scripts": {},
+    "dependencies": {
+        "@types/lodash": "*"
+    },
+    "typesPublisherContentHash": "a8852678e8902a2fc1688d7c6c108edb0957478e3f38a9d26aba085486bd2e7e",
+    "typeScriptVersion": "4.5"
+}

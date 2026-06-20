@@ -1,0 +1,32 @@
+{
+    "name": "@types/lodash.isboolean",
+    "version": "3.0.9",
+    "description": "TypeScript definitions for lodash.isboolean",
+    "homepage": "https://github.com/DefinitelyTyped/DefinitelyTyped/tree/master/types/lodash.isboolean",
+    "license": "MIT",
+    "contributors": [
+        {
+            "name": "Brian Zengel",
+            "githubUsername": "bczengel",
+            "url": "https://github.com/bczengel"
+        },
+        {
+            "name": "Ilya Mochalov",
+            "githubUsername": "chrootsu",
+            "url": "https://github.com/chrootsu"
+        }
+    ],
+    "main": "",
+    "types": "index.d.ts",
+    "repository": {
+        "type": "git",
+        "url": "https://github.com/DefinitelyTyped/DefinitelyTyped.git",
+        "directory": "types/lodash.isboolean"
+    },
+    "scripts": {},
+    "dependencies": {
+        "@types/lodash": "*"
+    },
+    "typesPublisherContentHash": "0506706717f66116d74d227eca81a66ea1abb5f59d00498fddc300e40559af71",
+    "typeScriptVersion": "4.5"
+}

@@ -1,0 +1,26 @@
+{
+    "name": "@types/bundle-name",
+    "version": "4.1.0",
+    "description": "TypeScript definitions for bundle-name",
+    "homepage": "https://github.com/DefinitelyTyped/DefinitelyTyped/tree/master/types/bundle-name",
+    "license": "MIT",
+    "contributors": [
+        {
+            "name": "Tristan F.",
+            "githubUsername": "LeoDog896",
+            "url": "https://github.com/LeoDog896"
+        }
+    ],
+    "type": "module",
+    "main": "",
+    "types": "index.d.ts",
+    "repository": {
+        "type": "git",
+        "url": "https://github.com/DefinitelyTyped/DefinitelyTyped.git",
+        "directory": "types/bundle-name"
+    },
+    "scripts": {},
+    "dependencies": {},
+    "typesPublisherContentHash": "a697de56bed56a38971c0760c1e03d468415166b41c0d50af965e28a81e182c7",
+    "typeScriptVersion": "4.8"
+}

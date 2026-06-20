@@ -1,0 +1,12 @@
+{
+    "name": "@types/ansi-styles",
+    "version": "4.2.4",
+    "description": "Stub TypeScript definitions entry for ansi-styles, which provides its own types definitions",
+    "main": "",
+    "scripts": {},
+    "license": "MIT",
+    "dependencies": {
+        "ansi-styles": "*"
+    },
+    "deprecated": "This is a stub types definition. ansi-styles provides its own type definitions, so you do not need this installed."
+}

@@ -1,0 +1,26 @@
+{
+    "name": "@types/default-browser-id",
+    "version": "5.0.0",
+    "description": "TypeScript definitions for default-browser-id",
+    "homepage": "https://github.com/DefinitelyTyped/DefinitelyTyped/tree/master/types/default-browser-id",
+    "license": "MIT",
+    "contributors": [
+        {
+            "name": "Tristan F.",
+            "githubUsername": "LeoDog896",
+            "url": "https://github.com/LeoDog896"
+        }
+    ],
+    "type": "module",
+    "main": "",
+    "types": "index.d.ts",
+    "repository": {
+        "type": "git",
+        "url": "https://github.com/DefinitelyTyped/DefinitelyTyped.git",
+        "directory": "types/default-browser-id"
+    },
+    "scripts": {},
+    "dependencies": {},
+    "typesPublisherContentHash": "0b0d20c5cfb16d37ed7b6d96e3e7c71000f9db7bdc06c49b4029fe9c6f3a21b1",
+    "typeScriptVersion": "4.8"
+}

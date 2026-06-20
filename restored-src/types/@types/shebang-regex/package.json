@@ -1,0 +1,14 @@
+{
+    "name": "@types/shebang-regex",
+    "version": "3.0.0",
+    "typings": null,
+    "description": "Stub TypeScript definitions entry for shebang-regex, which provides its own types definitions",
+    "main": "",
+    "scripts": {},
+    "author": "",
+    "repository": "https://github.com/sindresorhus/shebang-regex",
+    "license": "MIT",
+    "dependencies": {
+        "shebang-regex": "*"
+    }
+}

@@ -1,0 +1,13 @@
+{
+    "name": "@types/http-proxy-agent",
+    "version": "4.0.1",
+    "typings": null,
+    "description": "Stub TypeScript definitions entry for http-proxy-agent, which provides its own types definitions",
+    "main": "",
+    "scripts": {},
+    "author": "",
+    "license": "MIT",
+    "dependencies": {
+        "http-proxy-agent": "*"
+    }
+}

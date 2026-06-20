@@ -1,0 +1,14 @@
+{
+    "name": "@types/onetime",
+    "version": "4.0.0",
+    "typings": null,
+    "description": "Stub TypeScript definitions entry for onetime, which provides its own types definitions",
+    "main": "",
+    "scripts": {},
+    "author": "",
+    "repository": "https://github.com/sindresorhus/onetime",
+    "license": "MIT",
+    "dependencies": {
+        "onetime": "*"
+    }
+}

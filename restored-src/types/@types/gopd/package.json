@@ -1,0 +1,25 @@
+{
+    "name": "@types/gopd",
+    "version": "1.0.3",
+    "description": "TypeScript definitions for gopd",
+    "homepage": "https://github.com/DefinitelyTyped/DefinitelyTyped/tree/master/types/gopd",
+    "license": "MIT",
+    "contributors": [
+        {
+            "name": "Jordan Harband",
+            "githubUsername": "ljharb",
+            "url": "https://github.com/ljharb"
+        }
+    ],
+    "main": "",
+    "types": "index.d.ts",
+    "repository": {
+        "type": "git",
+        "url": "https://github.com/DefinitelyTyped/DefinitelyTyped.git",
+        "directory": "types/gopd"
+    },
+    "scripts": {},
+    "dependencies": {},
+    "typesPublisherContentHash": "bfbc49531aa1443d27218eb344c019d063a0136b8aca17d1e674ae30b4b551f8",
+    "typeScriptVersion": "4.5"
+}

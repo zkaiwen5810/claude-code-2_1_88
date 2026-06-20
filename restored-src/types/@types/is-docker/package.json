@@ -1,0 +1,14 @@
+{
+    "name": "@types/is-docker",
+    "version": "2.0.0",
+    "typings": null,
+    "description": "Stub TypeScript definitions entry for is-docker, which provides its own types definitions",
+    "main": "",
+    "scripts": {},
+    "author": "",
+    "repository": "https://github.com/sindresorhus/is-docker",
+    "license": "MIT",
+    "dependencies": {
+        "is-docker": "*"
+    }
+}

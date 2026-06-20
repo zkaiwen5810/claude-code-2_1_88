@@ -1,0 +1,14 @@
+{
+    "name": "@types/npm-run-path",
+    "version": "3.0.1",
+    "typings": null,
+    "description": "Stub TypeScript definitions entry for npm-run-path, which provides its own types definitions",
+    "main": "",
+    "scripts": {},
+    "author": "",
+    "repository": "https://github.com/sindresorhus/npm-run-path",
+    "license": "MIT",
+    "dependencies": {
+        "npm-run-path": "*"
+    }
+}

@@ -1,0 +1,12 @@
+{
+    "name": "@types/ansi-escapes",
+    "version": "4.0.4",
+    "description": "Stub TypeScript definitions entry for ansi-escapes, which provides its own types definitions",
+    "main": "",
+    "scripts": {},
+    "license": "MIT",
+    "dependencies": {
+        "ansi-escapes": "*"
+    },
+    "deprecated": "This is a stub types definition. ansi-escapes provides its own type definitions, so you do not need this installed."
+}

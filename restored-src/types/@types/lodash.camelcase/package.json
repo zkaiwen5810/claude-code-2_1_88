@@ -1,0 +1,32 @@
+{
+    "name": "@types/lodash.camelcase",
+    "version": "4.3.9",
+    "description": "TypeScript definitions for lodash.camelcase",
+    "homepage": "https://github.com/DefinitelyTyped/DefinitelyTyped/tree/master/types/lodash.camelcase",
+    "license": "MIT",
+    "contributors": [
+        {
+            "name": "Brian Zengel",
+            "githubUsername": "bczengel",
+            "url": "https://github.com/bczengel"
+        },
+        {
+            "name": "Ilya Mochalov",
+            "githubUsername": "chrootsu",
+            "url": "https://github.com/chrootsu"
+        }
+    ],
+    "main": "",
+    "types": "index.d.ts",
+    "repository": {
+        "type": "git",
+        "url": "https://github.com/DefinitelyTyped/DefinitelyTyped.git",
+        "directory": "types/lodash.camelcase"
+    },
+    "scripts": {},
+    "dependencies": {
+        "@types/lodash": "*"
+    },
+    "typesPublisherContentHash": "6d8de1a76c6d3dffd7995eb66c76bcf1856fcdf17ccb2a067d2a110daab965a7",
+    "typeScriptVersion": "4.5"
+}

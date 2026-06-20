@@ -1,0 +1,12 @@
+{
+    "name": "@types/auto-bind",
+    "version": "2.1.4",
+    "description": "Stub TypeScript definitions entry for auto-bind, which provides its own types definitions",
+    "main": "",
+    "scripts": {},
+    "license": "MIT",
+    "dependencies": {
+        "auto-bind": "*"
+    },
+    "deprecated": "This is a stub types definition. auto-bind provides its own type definitions, so you do not need this installed."
+}

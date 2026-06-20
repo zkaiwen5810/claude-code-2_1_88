@@ -16,9 +16,12 @@
     "verbatimModuleSyntax": true,
     "isolatedModules": true,
     "baseUrl": ".",
+    "typeRoots": ["./types/@types"],
+    "types": ["node"],
     "paths": {
       "src/*": ["src/*"],
-      "vendor/*": ["vendor/*"]
+      "vendor/*": ["vendor/*"],
+      "*": ["types/npm/*", "types/@types/*", "*"]
     }
   },
   "include": ["src/**/*.ts", "src/**/*.tsx", "vendor/**/*.ts", "editor-shims.d.ts"],

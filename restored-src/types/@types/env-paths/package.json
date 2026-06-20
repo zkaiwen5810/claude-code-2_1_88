@@ -1,0 +1,12 @@
+{
+    "name": "@types/env-paths",
+    "version": "2.1.2",
+    "description": "Stub TypeScript definitions entry for env-paths, which provides its own types definitions",
+    "main": "",
+    "scripts": {},
+    "license": "MIT",
+    "dependencies": {
+        "env-paths": "*"
+    },
+    "deprecated": "This is a stub types definition. env-paths provides its own type definitions, so you do not need this installed."
+}
