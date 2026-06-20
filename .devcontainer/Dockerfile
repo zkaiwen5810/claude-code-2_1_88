@@ -6,6 +6,8 @@ RUN sed -i 's|http://deb.debian.org/debian|https://mirrors.tuna.tsinghua.edu.cn/
 RUN apt-get update && apt-get install -y \
     build-essential \
     python3 \
+    python3-pip \
+    python3-venv \
     make \
     g++ \
     curl \
@@ -14,12 +16,23 @@ RUN apt-get update && apt-get install -y \
     fd-find \
     zsh \
     bubblewrap \
+    vim \
     && rm -rf /var/lib/apt/lists/*
 
 # npm/pnpm/yarn/corepack
 ENV NPM_CONFIG_REGISTRY=https://registry.npmmirror.com/
 
 RUN corepack enable && corepack prepare pnpm@latest --activate
+
+# pip source mirror switch
+ENV PIP_INDEX_URL=https://pypi.tuna.tsinghua.edu.cn/simple
+ENV PIP_TRUSTED_HOST=pypi.tuna.tsinghua.edu.cn
+
+# uv source mirror switch
+ENV UV_INDEX_URL=https://pypi.tuna.tsinghua.edu.cn/simple
+
+# install uv
+RUN pip3 install --no-cache-dir uv --break-system-packages
 
 # Copy devcontainer bootstrap script into image.
 COPY post-create.sh /tmp/post-create.sh

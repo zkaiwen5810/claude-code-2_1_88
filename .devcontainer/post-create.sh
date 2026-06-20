@@ -19,7 +19,13 @@ cat > "$LOCAL_BIN_DIR/codex-dfa" <<'EOF'
 #!/usr/bin/env bash
 set -euo pipefail
 
-exec /usr/local/bin/codex --sandbox danger-full-access "$@"
+CODEX_BIN="$(command -v codex)"
+if [ -z "$CODEX_BIN" ]; then
+  echo "codex-dfa: codex executable not found on PATH" >&2
+  exit 127
+fi
+
+exec "$CODEX_BIN" --sandbox danger-full-access "$@"
 EOF
 chmod 0755 "$LOCAL_BIN_DIR/codex-dfa"
 
