@@ -1,9 +1,9 @@
 {
   "compilerOptions": {
-    "target": "ES2022",
+    "target": "ES2023",
     "module": "ESNext",
     "moduleResolution": "Bundler",
-    "lib": ["ES2022"],
+    "lib": ["ES2023"],
     "jsx": "preserve",
     "strict": false,
     "noEmit": true,
@@ -19,8 +19,12 @@
     "typeRoots": ["./types/@types"],
     "types": ["node"],
     "paths": {
+      "@modelcontextprotocol/sdk/*": ["types/npm/@modelcontextprotocol/sdk/dist/esm/*"],
+      "https-proxy-agent": ["types/npm/https-proxy-agent/dist/index.d.ts"],
       "src/*": ["src/*"],
       "vendor/*": ["vendor/*"],
+      "vscode-jsonrpc/node.js": ["types/npm/vscode-jsonrpc/lib/node/main.d.ts"],
+      "vscode-languageserver-protocol": ["types/npm/vscode-languageserver-protocol/lib/node/main.d.ts"],
       "*": ["types/npm/*", "types/@types/*", "*"]
     }
   },
