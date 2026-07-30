@@ -14,7 +14,31 @@ export type COMMAND_MESSAGE_TAG = any
 export const COMMAND_NAME_TAG: any
 export type COMMAND_NAME_TAG = any
 export const DeepImmutable: any
-export type DeepImmutable = any
+/**
+ * Best-effort reconstruction of the missing source type.
+ *
+ * Recursively exposes containers and object properties through readonly
+ * interfaces while leaving callables and opaque built-ins usable.
+ */
+export type DeepImmutable<T> = T extends
+  | ((...args: any[]) => any)
+  | Date
+  | RegExp
+  | Error
+  | WeakMap<object, unknown>
+  | WeakSet<object>
+  ? T
+  : T extends Promise<infer U>
+    ? Promise<DeepImmutable<U>>
+    : T extends ReadonlyMap<infer K, infer V>
+      ? ReadonlyMap<DeepImmutable<K>, DeepImmutable<V>>
+      : T extends ReadonlySet<infer U>
+        ? ReadonlySet<DeepImmutable<U>>
+        : T extends readonly unknown[]
+          ? { readonly [K in keyof T]: DeepImmutable<T[K]> }
+          : T extends object
+            ? { readonly [K in keyof T]: DeepImmutable<T[K]> }
+            : T
 export const DenialTrackingState: any
 export type DenialTrackingState = any
 export const DiagnosticTrackingService: any
