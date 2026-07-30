@@ -1,0 +1,209 @@
+{
+  "schemaVersion": 1,
+  "command": "npx --yes -p typescript@5.9.3 tsc --noEmit --project restored-src/tsconfig.json --pretty false",
+  "typescriptExitCode": 2,
+  "summary": {
+    "totalTypeScriptDiagnostics": 493,
+    "namespaceMemberDiagnostics": 20,
+    "modulesWithMissingNamespaceMembers": 6,
+    "uniqueMissingNamespaceMembers": 12,
+    "eligibleEditorDeclarationModules": 0,
+    "eligibleMissingExports": 0,
+    "recoveredImplementationModules": 1,
+    "externalOrUnresolvedModules": 5
+  },
+  "entries": [
+    {
+      "module": "audio-capture-napi",
+      "classification": "external-or-unresolved",
+      "declarationFile": null,
+      "diagnosticCount": 9,
+      "missingExports": [
+        "isNativeAudioAvailable",
+        "isNativeRecordingActive",
+        "startNativeRecording",
+        "stopNativeRecording"
+      ],
+      "sites": [
+        {
+          "file": "restored-src/src/services/voice.ts",
+          "line": 30,
+          "column": 9,
+          "member": "isNativeAudioAvailable"
+        },
+        {
+          "file": "restored-src/src/services/voice.ts",
+          "line": 197,
+          "column": 12,
+          "member": "isNativeAudioAvailable"
+        },
+        {
+          "file": "restored-src/src/services/voice.ts",
+          "line": 243,
+          "column": 13,
+          "member": "isNativeAudioAvailable"
+        },
+        {
+          "file": "restored-src/src/services/voice.ts",
+          "line": 271,
+          "column": 12,
+          "member": "isNativeAudioAvailable"
+        },
+        {
+          "file": "restored-src/src/services/voice.ts",
+          "line": 345,
+          "column": 10,
+          "member": "isNativeAudioAvailable"
+        },
+        {
+          "file": "restored-src/src/services/voice.ts",
+          "line": 350,
+          "column": 39,
+          "member": "isNativeRecordingActive"
+        },
+        {
+          "file": "restored-src/src/services/voice.ts",
+          "line": 351,
+          "column": 12,
+          "member": "stopNativeRecording"
+        },
+        {
+          "file": "restored-src/src/services/voice.ts",
+          "line": 354,
+          "column": 26,
+          "member": "startNativeRecording"
+        },
+        {
+          "file": "restored-src/src/services/voice.ts",
+          "line": 517,
+          "column": 15,
+          "member": "stopNativeRecording"
+        }
+      ]
+    },
+    {
+      "module": "cacache",
+      "classification": "external-or-unresolved",
+      "declarationFile": null,
+      "diagnosticCount": 2,
+      "missingExports": [
+        "ls",
+        "rm"
+      ],
+      "sites": [
+        {
+          "file": "restored-src/src/utils/cleanup.ts",
+          "line": 473,
+          "column": 28,
+          "member": "ls"
+        },
+        {
+          "file": "restored-src/src/utils/cleanup.ts",
+          "line": 508,
+          "column": 39,
+          "member": "rm"
+        }
+      ]
+    },
+    {
+      "module": "highlight.js",
+      "classification": "external-or-unresolved",
+      "declarationFile": null,
+      "diagnosticCount": 4,
+      "missingExports": [
+        "getLanguage",
+        "highlight"
+      ],
+      "sites": [
+        {
+          "file": "restored-src/src/native-ts/color-diff/index.ts",
+          "line": 432,
+          "column": 24,
+          "member": "getLanguage"
+        },
+        {
+          "file": "restored-src/src/native-ts/color-diff/index.ts",
+          "line": 434,
+          "column": 25,
+          "member": "getLanguage"
+        },
+        {
+          "file": "restored-src/src/native-ts/color-diff/index.ts",
+          "line": 516,
+          "column": 21,
+          "member": "highlight"
+        },
+        {
+          "file": "restored-src/src/utils/cliHighlight.ts",
+          "line": 28,
+          "column": 37,
+          "member": "getLanguage"
+        }
+      ]
+    },
+    {
+      "module": "image-processor-napi",
+      "classification": "external-or-unresolved",
+      "declarationFile": null,
+      "diagnosticCount": 3,
+      "missingExports": [
+        "getNativeModule",
+        "sharp"
+      ],
+      "sites": [
+        {
+          "file": "restored-src/src/tools/FileReadTool/imageProcessor.ts",
+          "line": 47,
+          "column": 36,
+          "member": "sharp"
+        },
+        {
+          "file": "restored-src/src/utils/imagePaste.ts",
+          "line": 108,
+          "column": 15,
+          "member": "getNativeModule"
+        },
+        {
+          "file": "restored-src/src/utils/imagePaste.ts",
+          "line": 137,
+          "column": 15,
+          "member": "getNativeModule"
+        }
+      ]
+    },
+    {
+      "module": "restored-src/src/constants/betas",
+      "classification": "recovered-implementation",
+      "declarationFile": null,
+      "diagnosticCount": 1,
+      "missingExports": [
+        "CACHE_EDITING_BETA_HEADER"
+      ],
+      "sites": [
+        {
+          "file": "restored-src/src/services/api/claude.ts",
+          "line": 1197,
+          "column": 36,
+          "member": "CACHE_EDITING_BETA_HEADER"
+        }
+      ]
+    },
+    {
+      "module": "url-handler-napi",
+      "classification": "external-or-unresolved",
+      "declarationFile": null,
+      "diagnosticCount": 1,
+      "missingExports": [
+        "waitForUrlEvent"
+      ],
+      "sites": [
+        {
+          "file": "restored-src/src/utils/deepLink/protocolHandler.ts",
+          "line": 95,
+          "column": 13,
+          "member": "waitForUrlEvent"
+        }
+      ]
+    }
+  ]
+}

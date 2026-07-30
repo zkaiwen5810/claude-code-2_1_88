@@ -5,3 +5,5 @@ declare const defaultExport: any
 export default defaultExport
 export const TungstenTool: any
 export type TungstenTool = any
+export const clearSessionsWithTungstenUsage: any
+export const resetInitializationState: any

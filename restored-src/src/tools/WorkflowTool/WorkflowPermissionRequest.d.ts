@@ -5,3 +5,4 @@ declare const defaultExport: any
 export default defaultExport
 export const WebFetchPermissionRequest: any
 export type WebFetchPermissionRequest = any
+export const WorkflowPermissionRequest: any

@@ -1,0 +1,1764 @@
+{
+  "schemaVersion": 1,
+  "command": "npx --yes -p typescript@5.9.3 tsc --noEmit --project restored-src/tsconfig.json --pretty false",
+  "typescriptExitCode": 2,
+  "summary": {
+    "totalTypeScriptDiagnostics": 629,
+    "namespaceMemberDiagnostics": 154,
+    "modulesWithMissingNamespaceMembers": 70,
+    "uniqueMissingNamespaceMembers": 123,
+    "eligibleEditorDeclarationModules": 64,
+    "eligibleMissingExports": 111,
+    "recoveredImplementationModules": 1,
+    "externalOrUnresolvedModules": 5
+  },
+  "entries": [
+    {
+      "module": "audio-capture-napi",
+      "classification": "external-or-unresolved",
+      "declarationFile": null,
+      "diagnosticCount": 9,
+      "missingExports": [
+        "isNativeAudioAvailable",
+        "isNativeRecordingActive",
+        "startNativeRecording",
+        "stopNativeRecording"
+      ],
+      "sites": [
+        {
+          "file": "restored-src/src/services/voice.ts",
+          "line": 30,
+          "column": 9,
+          "member": "isNativeAudioAvailable"
+        },
+        {
+          "file": "restored-src/src/services/voice.ts",
+          "line": 197,
+          "column": 12,
+          "member": "isNativeAudioAvailable"
+        },
+        {
+          "file": "restored-src/src/services/voice.ts",
+          "line": 243,
+          "column": 13,
+          "member": "isNativeAudioAvailable"
+        },
+        {
+          "file": "restored-src/src/services/voice.ts",
+          "line": 271,
+          "column": 12,
+          "member": "isNativeAudioAvailable"
+        },
+        {
+          "file": "restored-src/src/services/voice.ts",
+          "line": 345,
+          "column": 10,
+          "member": "isNativeAudioAvailable"
+        },
+        {
+          "file": "restored-src/src/services/voice.ts",
+          "line": 350,
+          "column": 39,
+          "member": "isNativeRecordingActive"
+        },
+        {
+          "file": "restored-src/src/services/voice.ts",
+          "line": 351,
+          "column": 12,
+          "member": "stopNativeRecording"
+        },
+        {
+          "file": "restored-src/src/services/voice.ts",
+          "line": 354,
+          "column": 26,
+          "member": "startNativeRecording"
+        },
+        {
+          "file": "restored-src/src/services/voice.ts",
+          "line": 517,
+          "column": 15,
+          "member": "stopNativeRecording"
+        }
+      ]
+    },
+    {
+      "module": "cacache",
+      "classification": "external-or-unresolved",
+      "declarationFile": null,
+      "diagnosticCount": 2,
+      "missingExports": [
+        "ls",
+        "rm"
+      ],
+      "sites": [
+        {
+          "file": "restored-src/src/utils/cleanup.ts",
+          "line": 473,
+          "column": 28,
+          "member": "ls"
+        },
+        {
+          "file": "restored-src/src/utils/cleanup.ts",
+          "line": 508,
+          "column": 39,
+          "member": "rm"
+        }
+      ]
+    },
+    {
+      "module": "highlight.js",
+      "classification": "external-or-unresolved",
+      "declarationFile": null,
+      "diagnosticCount": 4,
+      "missingExports": [
+        "getLanguage",
+        "highlight"
+      ],
+      "sites": [
+        {
+          "file": "restored-src/src/native-ts/color-diff/index.ts",
+          "line": 432,
+          "column": 24,
+          "member": "getLanguage"
+        },
+        {
+          "file": "restored-src/src/native-ts/color-diff/index.ts",
+          "line": 434,
+          "column": 25,
+          "member": "getLanguage"
+        },
+        {
+          "file": "restored-src/src/native-ts/color-diff/index.ts",
+          "line": 516,
+          "column": 21,
+          "member": "highlight"
+        },
+        {
+          "file": "restored-src/src/utils/cliHighlight.ts",
+          "line": 28,
+          "column": 37,
+          "member": "getLanguage"
+        }
+      ]
+    },
+    {
+      "module": "image-processor-napi",
+      "classification": "external-or-unresolved",
+      "declarationFile": null,
+      "diagnosticCount": 3,
+      "missingExports": [
+        "getNativeModule",
+        "sharp"
+      ],
+      "sites": [
+        {
+          "file": "restored-src/src/tools/FileReadTool/imageProcessor.ts",
+          "line": 47,
+          "column": 36,
+          "member": "sharp"
+        },
+        {
+          "file": "restored-src/src/utils/imagePaste.ts",
+          "line": 108,
+          "column": 15,
+          "member": "getNativeModule"
+        },
+        {
+          "file": "restored-src/src/utils/imagePaste.ts",
+          "line": 137,
+          "column": 15,
+          "member": "getNativeModule"
+        }
+      ]
+    },
+    {
+      "module": "restored-src/src/assistant/AssistantSessionChooser.d.ts",
+      "classification": "eligible-editor-declaration",
+      "declarationFile": "restored-src/src/assistant/AssistantSessionChooser.d.ts",
+      "diagnosticCount": 1,
+      "missingExports": [
+        "AssistantSessionChooser"
+      ],
+      "sites": [
+        {
+          "file": "restored-src/src/dialogLaunchers.tsx",
+          "line": 84,
+          "column": 11,
+          "member": "AssistantSessionChooser"
+        }
+      ]
+    },
+    {
+      "module": "restored-src/src/assistant/gate.d.ts",
+      "classification": "eligible-editor-declaration",
+      "declarationFile": "restored-src/src/assistant/gate.d.ts",
+      "diagnosticCount": 1,
+      "missingExports": [
+        "isKairosEnabled"
+      ],
+      "sites": [
+        {
+          "file": "restored-src/src/main.tsx",
+          "line": 1794,
+          "column": 31,
+          "member": "isKairosEnabled"
+        }
+      ]
+    },
+    {
+      "module": "restored-src/src/assistant/sessionDiscovery.d.ts",
+      "classification": "eligible-editor-declaration",
+      "declarationFile": "restored-src/src/assistant/sessionDiscovery.d.ts",
+      "diagnosticCount": 1,
+      "missingExports": [
+        "discoverAssistantSessions"
+      ],
+      "sites": [
+        {
+          "file": "restored-src/src/main.tsx",
+          "line": 4452,
+          "column": 17,
+          "member": "discoverAssistantSessions"
+        }
+      ]
+    },
+    {
+      "module": "restored-src/src/bridge/webhookSanitizer.d.ts",
+      "classification": "eligible-editor-declaration",
+      "declarationFile": "restored-src/src/bridge/webhookSanitizer.d.ts",
+      "diagnosticCount": 1,
+      "missingExports": [
+        "sanitizeInboundWebhookContent"
+      ],
+      "sites": [
+        {
+          "file": "restored-src/src/hooks/useReplBridge.tsx",
+          "line": 231,
+          "column": 25,
+          "member": "sanitizeInboundWebhookContent"
+        }
+      ]
+    },
+    {
+      "module": "restored-src/src/cli/bg.d.ts",
+      "classification": "eligible-editor-declaration",
+      "declarationFile": "restored-src/src/cli/bg.d.ts",
+      "diagnosticCount": 5,
+      "missingExports": [
+        "attachHandler",
+        "handleBgFlag",
+        "killHandler",
+        "logsHandler",
+        "psHandler"
+      ],
+      "sites": [
+        {
+          "file": "restored-src/src/entrypoints/cli.tsx",
+          "line": 200,
+          "column": 18,
+          "member": "psHandler"
+        },
+        {
+          "file": "restored-src/src/entrypoints/cli.tsx",
+          "line": 203,
+          "column": 18,
+          "member": "logsHandler"
+        },
+        {
+          "file": "restored-src/src/entrypoints/cli.tsx",
+          "line": 206,
+          "column": 18,
+          "member": "attachHandler"
+        },
+        {
+          "file": "restored-src/src/entrypoints/cli.tsx",
+          "line": 209,
+          "column": 18,
+          "member": "killHandler"
+        },
+        {
+          "file": "restored-src/src/entrypoints/cli.tsx",
+          "line": 212,
+          "column": 18,
+          "member": "handleBgFlag"
+        }
+      ]
+    },
+    {
+      "module": "restored-src/src/cli/handlers/ant.d.ts",
+      "classification": "eligible-editor-declaration",
+      "declarationFile": "restored-src/src/cli/handlers/ant.d.ts",
+      "diagnosticCount": 9,
+      "missingExports": [
+        "completionHandler",
+        "errorHandler",
+        "exportHandler",
+        "logHandler",
+        "taskCreateHandler",
+        "taskDirHandler",
+        "taskGetHandler",
+        "taskListHandler",
+        "taskUpdateHandler"
+      ],
+      "sites": [
+        {
+          "file": "restored-src/src/main.tsx",
+          "line": 6237,
+          "column": 17,
+          "member": "logHandler"
+        },
+        {
+          "file": "restored-src/src/main.tsx",
+          "line": 6253,
+          "column": 17,
+          "member": "errorHandler"
+        },
+        {
+          "file": "restored-src/src/main.tsx",
+          "line": 6277,
+          "column": 17,
+          "member": "exportHandler"
+        },
+        {
+          "file": "restored-src/src/main.tsx",
+          "line": 6296,
+          "column": 21,
+          "member": "taskCreateHandler"
+        },
+        {
+          "file": "restored-src/src/main.tsx",
+          "line": 6313,
+          "column": 21,
+          "member": "taskListHandler"
+        },
+        {
+          "file": "restored-src/src/main.tsx",
+          "line": 6323,
+          "column": 19,
+          "member": "taskGetHandler"
+        },
+        {
+          "file": "restored-src/src/main.tsx",
+          "line": 6351,
+          "column": 21,
+          "member": "taskUpdateHandler"
+        },
+        {
+          "file": "restored-src/src/main.tsx",
+          "line": 6361,
+          "column": 19,
+          "member": "taskDirHandler"
+        },
+        {
+          "file": "restored-src/src/main.tsx",
+          "line": 6375,
+          "column": 17,
+          "member": "completionHandler"
+        }
+      ]
+    },
+    {
+      "module": "restored-src/src/cli/handlers/templateJobs.d.ts",
+      "classification": "eligible-editor-declaration",
+      "declarationFile": "restored-src/src/cli/handlers/templateJobs.d.ts",
+      "diagnosticCount": 1,
+      "missingExports": [
+        "templatesMain"
+      ],
+      "sites": [
+        {
+          "file": "restored-src/src/entrypoints/cli.tsx",
+          "line": 223,
+          "column": 13,
+          "member": "templatesMain"
+        }
+      ]
+    },
+    {
+      "module": "restored-src/src/cli/rollback.d.ts",
+      "classification": "eligible-editor-declaration",
+      "declarationFile": "restored-src/src/cli/rollback.d.ts",
+      "diagnosticCount": 1,
+      "missingExports": [
+        "rollback"
+      ],
+      "sites": [
+        {
+          "file": "restored-src/src/main.tsx",
+          "line": 6200,
+          "column": 19,
+          "member": "rollback"
+        }
+      ]
+    },
+    {
+      "module": "restored-src/src/cli/up.d.ts",
+      "classification": "eligible-editor-declaration",
+      "declarationFile": "restored-src/src/cli/up.d.ts",
+      "diagnosticCount": 1,
+      "missingExports": [
+        "up"
+      ],
+      "sites": [
+        {
+          "file": "restored-src/src/main.tsx",
+          "line": 6176,
+          "column": 17,
+          "member": "up"
+        }
+      ]
+    },
+    {
+      "module": "restored-src/src/commands/assistant/assistant.d.ts",
+      "classification": "eligible-editor-declaration",
+      "declarationFile": "restored-src/src/commands/assistant/assistant.d.ts",
+      "diagnosticCount": 1,
+      "missingExports": [
+        "NewInstallWizard"
+      ],
+      "sites": [
+        {
+          "file": "restored-src/src/dialogLaunchers.tsx",
+          "line": 105,
+          "column": 11,
+          "member": "NewInstallWizard"
+        }
+      ]
+    },
+    {
+      "module": "restored-src/src/components/agents/SnapshotUpdateDialog.d.ts",
+      "classification": "eligible-editor-declaration",
+      "declarationFile": "restored-src/src/components/agents/SnapshotUpdateDialog.d.ts",
+      "diagnosticCount": 2,
+      "missingExports": [
+        "SnapshotUpdateDialog",
+        "buildMergePrompt"
+      ],
+      "sites": [
+        {
+          "file": "restored-src/src/dialogLaunchers.tsx",
+          "line": 39,
+          "column": 11,
+          "member": "SnapshotUpdateDialog"
+        },
+        {
+          "file": "restored-src/src/main.tsx",
+          "line": 3293,
+          "column": 21,
+          "member": "buildMergePrompt"
+        }
+      ]
+    },
+    {
+      "module": "restored-src/src/components/messages/SnipBoundaryMessage.d.ts",
+      "classification": "eligible-editor-declaration",
+      "declarationFile": "restored-src/src/components/messages/SnipBoundaryMessage.d.ts",
+      "diagnosticCount": 1,
+      "missingExports": [
+        "SnipBoundaryMessage"
+      ],
+      "sites": [
+        {
+          "file": "restored-src/src/components/Message.tsx",
+          "line": 217,
+          "column": 19,
+          "member": "SnipBoundaryMessage"
+        }
+      ]
+    },
+    {
+      "module": "restored-src/src/components/messages/UserCrossSessionMessage.d.ts",
+      "classification": "eligible-editor-declaration",
+      "declarationFile": "restored-src/src/components/messages/UserCrossSessionMessage.d.ts",
+      "diagnosticCount": 1,
+      "missingExports": [
+        "UserCrossSessionMessage"
+      ],
+      "sites": [
+        {
+          "file": "restored-src/src/components/messages/UserTextMessage.tsx",
+          "line": 170,
+          "column": 15,
+          "member": "UserCrossSessionMessage"
+        }
+      ]
+    },
+    {
+      "module": "restored-src/src/components/messages/UserForkBoilerplateMessage.d.ts",
+      "classification": "eligible-editor-declaration",
+      "declarationFile": "restored-src/src/components/messages/UserForkBoilerplateMessage.d.ts",
+      "diagnosticCount": 1,
+      "missingExports": [
+        "UserForkBoilerplateMessage"
+      ],
+      "sites": [
+        {
+          "file": "restored-src/src/components/messages/UserTextMessage.tsx",
+          "line": 157,
+          "column": 15,
+          "member": "UserForkBoilerplateMessage"
+        }
+      ]
+    },
+    {
+      "module": "restored-src/src/components/messages/UserGitHubWebhookMessage.d.ts",
+      "classification": "eligible-editor-declaration",
+      "declarationFile": "restored-src/src/components/messages/UserGitHubWebhookMessage.d.ts",
+      "diagnosticCount": 1,
+      "missingExports": [
+        "UserGitHubWebhookMessage"
+      ],
+      "sites": [
+        {
+          "file": "restored-src/src/components/messages/UserTextMessage.tsx",
+          "line": 103,
+          "column": 15,
+          "member": "UserGitHubWebhookMessage"
+        }
+      ]
+    },
+    {
+      "module": "restored-src/src/components/permissions/MonitorPermissionRequest/MonitorPermissionRequest.d.ts",
+      "classification": "eligible-editor-declaration",
+      "declarationFile": "restored-src/src/components/permissions/MonitorPermissionRequest/MonitorPermissionRequest.d.ts",
+      "diagnosticCount": 1,
+      "missingExports": [
+        "MonitorPermissionRequest"
+      ],
+      "sites": [
+        {
+          "file": "restored-src/src/components/permissions/PermissionRequest.tsx",
+          "line": 68,
+          "column": 7,
+          "member": "MonitorPermissionRequest"
+        }
+      ]
+    },
+    {
+      "module": "restored-src/src/components/permissions/ReviewArtifactPermissionRequest/ReviewArtifactPermissionRequest.d.ts",
+      "classification": "eligible-editor-declaration",
+      "declarationFile": "restored-src/src/components/permissions/ReviewArtifactPermissionRequest/ReviewArtifactPermissionRequest.d.ts",
+      "diagnosticCount": 1,
+      "missingExports": [
+        "ReviewArtifactPermissionRequest"
+      ],
+      "sites": [
+        {
+          "file": "restored-src/src/components/permissions/PermissionRequest.tsx",
+          "line": 44,
+          "column": 7,
+          "member": "ReviewArtifactPermissionRequest"
+        }
+      ]
+    },
+    {
+      "module": "restored-src/src/components/tasks/MonitorMcpDetailDialog.d.ts",
+      "classification": "eligible-editor-declaration",
+      "declarationFile": "restored-src/src/components/tasks/MonitorMcpDetailDialog.d.ts",
+      "diagnosticCount": 1,
+      "missingExports": [
+        "MonitorMcpDetailDialog"
+      ],
+      "sites": [
+        {
+          "file": "restored-src/src/components/tasks/BackgroundTasksDialog.tsx",
+          "line": 156,
+          "column": 7,
+          "member": "MonitorMcpDetailDialog"
+        }
+      ]
+    },
+    {
+      "module": "restored-src/src/components/tasks/WorkflowDetailDialog.d.ts",
+      "classification": "eligible-editor-declaration",
+      "declarationFile": "restored-src/src/components/tasks/WorkflowDetailDialog.d.ts",
+      "diagnosticCount": 1,
+      "missingExports": [
+        "WorkflowDetailDialog"
+      ],
+      "sites": [
+        {
+          "file": "restored-src/src/components/tasks/BackgroundTasksDialog.tsx",
+          "line": 138,
+          "column": 7,
+          "member": "WorkflowDetailDialog"
+        }
+      ]
+    },
+    {
+      "module": "restored-src/src/constants/betas",
+      "classification": "recovered-implementation",
+      "declarationFile": null,
+      "diagnosticCount": 1,
+      "missingExports": [
+        "CACHE_EDITING_BETA_HEADER"
+      ],
+      "sites": [
+        {
+          "file": "restored-src/src/services/api/claude.ts",
+          "line": 1197,
+          "column": 36,
+          "member": "CACHE_EDITING_BETA_HEADER"
+        }
+      ]
+    },
+    {
+      "module": "restored-src/src/coordinator/workerAgent.d.ts",
+      "classification": "eligible-editor-declaration",
+      "declarationFile": "restored-src/src/coordinator/workerAgent.d.ts",
+      "diagnosticCount": 1,
+      "missingExports": [
+        "getCoordinatorAgents"
+      ],
+      "sites": [
+        {
+          "file": "restored-src/src/tools/AgentTool/builtInAgents.ts",
+          "line": 38,
+          "column": 15,
+          "member": "getCoordinatorAgents"
+        }
+      ]
+    },
+    {
+      "module": "restored-src/src/daemon/workerRegistry.d.ts",
+      "classification": "eligible-editor-declaration",
+      "declarationFile": "restored-src/src/daemon/workerRegistry.d.ts",
+      "diagnosticCount": 1,
+      "missingExports": [
+        "runDaemonWorker"
+      ],
+      "sites": [
+        {
+          "file": "restored-src/src/entrypoints/cli.tsx",
+          "line": 110,
+          "column": 13,
+          "member": "runDaemonWorker"
+        }
+      ]
+    },
+    {
+      "module": "restored-src/src/environment-runner/main.d.ts",
+      "classification": "eligible-editor-declaration",
+      "declarationFile": "restored-src/src/environment-runner/main.d.ts",
+      "diagnosticCount": 1,
+      "missingExports": [
+        "environmentRunnerMain"
+      ],
+      "sites": [
+        {
+          "file": "restored-src/src/entrypoints/cli.tsx",
+          "line": 235,
+          "column": 13,
+          "member": "environmentRunnerMain"
+        }
+      ]
+    },
+    {
+      "module": "restored-src/src/jobs/classifier.d.ts",
+      "classification": "eligible-editor-declaration",
+      "declarationFile": "restored-src/src/jobs/classifier.d.ts",
+      "diagnosticCount": 1,
+      "missingExports": [
+        "classifyAndWriteState"
+      ],
+      "sites": [
+        {
+          "file": "restored-src/src/query/stopHooks.ts",
+          "line": 121,
+          "column": 8,
+          "member": "classifyAndWriteState"
+        }
+      ]
+    },
+    {
+      "module": "restored-src/src/memdir/memoryShapeTelemetry.d.ts",
+      "classification": "eligible-editor-declaration",
+      "declarationFile": "restored-src/src/memdir/memoryShapeTelemetry.d.ts",
+      "diagnosticCount": 2,
+      "missingExports": [
+        "logMemoryRecallShape",
+        "logMemoryWriteShape"
+      ],
+      "sites": [
+        {
+          "file": "restored-src/src/memdir/findRelevantMemories.ts",
+          "line": 68,
+          "column": 13,
+          "member": "logMemoryRecallShape"
+        },
+        {
+          "file": "restored-src/src/utils/sessionFileAccessHooks.ts",
+          "line": 217,
+          "column": 29,
+          "member": "logMemoryWriteShape"
+        }
+      ]
+    },
+    {
+      "module": "restored-src/src/proactive/index.d.ts",
+      "classification": "eligible-editor-declaration",
+      "declarationFile": "restored-src/src/proactive/index.d.ts",
+      "diagnosticCount": 12,
+      "missingExports": [
+        "activateProactive",
+        "deactivateProactive",
+        "isProactiveActive",
+        "isProactivePaused"
+      ],
+      "sites": [
+        {
+          "file": "restored-src/src/cli/print.ts",
+          "line": 541,
+          "column": 22,
+          "member": "isProactiveActive"
+        },
+        {
+          "file": "restored-src/src/cli/print.ts",
+          "line": 544,
+          "column": 21,
+          "member": "activateProactive"
+        },
+        {
+          "file": "restored-src/src/cli/print.ts",
+          "line": 1839,
+          "column": 33,
+          "member": "isProactiveActive"
+        },
+        {
+          "file": "restored-src/src/cli/print.ts",
+          "line": 1840,
+          "column": 31,
+          "member": "isProactivePaused"
+        },
+        {
+          "file": "restored-src/src/cli/print.ts",
+          "line": 2478,
+          "column": 24,
+          "member": "isProactiveActive"
+        },
+        {
+          "file": "restored-src/src/cli/print.ts",
+          "line": 2479,
+          "column": 24,
+          "member": "isProactivePaused"
+        },
+        {
+          "file": "restored-src/src/cli/print.ts",
+          "line": 3884,
+          "column": 35,
+          "member": "isProactiveActive"
+        },
+        {
+          "file": "restored-src/src/cli/print.ts",
+          "line": 3885,
+          "column": 32,
+          "member": "activateProactive"
+        },
+        {
+          "file": "restored-src/src/cli/print.ts",
+          "line": 3889,
+          "column": 30,
+          "member": "deactivateProactive"
+        },
+        {
+          "file": "restored-src/src/services/compact/prompt.ts",
+          "line": 363,
+          "column": 24,
+          "member": "isProactiveActive"
+        },
+        {
+          "file": "restored-src/src/tools/AgentTool/AgentTool.tsx",
+          "line": 831,
+          "column": 27,
+          "member": "isProactiveActive"
+        },
+        {
+          "file": "restored-src/src/utils/systemPrompt.ts",
+          "line": 25,
+          "column": 27,
+          "member": "isProactiveActive"
+        }
+      ]
+    },
+    {
+      "module": "restored-src/src/self-hosted-runner/main.d.ts",
+      "classification": "eligible-editor-declaration",
+      "declarationFile": "restored-src/src/self-hosted-runner/main.d.ts",
+      "diagnosticCount": 1,
+      "missingExports": [
+        "selfHostedRunnerMain"
+      ],
+      "sites": [
+        {
+          "file": "restored-src/src/entrypoints/cli.tsx",
+          "line": 247,
+          "column": 13,
+          "member": "selfHostedRunnerMain"
+        }
+      ]
+    },
+    {
+      "module": "restored-src/src/server/parseConnectUrl.d.ts",
+      "classification": "eligible-editor-declaration",
+      "declarationFile": "restored-src/src/server/parseConnectUrl.d.ts",
+      "diagnosticCount": 2,
+      "missingExports": [
+        "parseConnectUrl"
+      ],
+      "sites": [
+        {
+          "file": "restored-src/src/main.tsx",
+          "line": 908,
+          "column": 15,
+          "member": "parseConnectUrl"
+        },
+        {
+          "file": "restored-src/src/main.tsx",
+          "line": 5695,
+          "column": 19,
+          "member": "parseConnectUrl"
+        }
+      ]
+    },
+    {
+      "module": "restored-src/src/services/compact/cachedMCConfig.d.ts",
+      "classification": "eligible-editor-declaration",
+      "declarationFile": "restored-src/src/services/compact/cachedMCConfig.d.ts",
+      "diagnosticCount": 1,
+      "missingExports": [
+        "getCachedMCConfig"
+      ],
+      "sites": [
+        {
+          "file": "restored-src/src/constants/prompts.ts",
+          "line": 69,
+          "column": 7,
+          "member": "getCachedMCConfig"
+        }
+      ]
+    },
+    {
+      "module": "restored-src/src/services/compact/cachedMicrocompact.d.ts",
+      "classification": "eligible-editor-declaration",
+      "declarationFile": "restored-src/src/services/compact/cachedMicrocompact.d.ts",
+      "diagnosticCount": 9,
+      "missingExports": [
+        "createCacheEditsBlock",
+        "createCachedMCState",
+        "getToolResultsToDelete",
+        "isCachedMicrocompactEnabled",
+        "markToolsSentToAPI",
+        "registerToolMessage",
+        "registerToolResult",
+        "resetCachedMCState"
+      ],
+      "sites": [
+        {
+          "file": "restored-src/src/services/api/claude.ts",
+          "line": 1192,
+          "column": 7,
+          "member": "isCachedMicrocompactEnabled"
+        },
+        {
+          "file": "restored-src/src/services/compact/microCompact.ts",
+          "line": 73,
+          "column": 36,
+          "member": "createCachedMCState"
+        },
+        {
+          "file": "restored-src/src/services/compact/microCompact.ts",
+          "line": 126,
+          "column": 20,
+          "member": "markToolsSentToAPI"
+        },
+        {
+          "file": "restored-src/src/services/compact/microCompact.ts",
+          "line": 132,
+          "column": 20,
+          "member": "resetCachedMCState"
+        },
+        {
+          "file": "restored-src/src/services/compact/microCompact.ts",
+          "line": 280,
+          "column": 11,
+          "member": "isCachedMicrocompactEnabled"
+        },
+        {
+          "file": "restored-src/src/services/compact/microCompact.ts",
+          "line": 324,
+          "column": 15,
+          "member": "registerToolResult"
+        },
+        {
+          "file": "restored-src/src/services/compact/microCompact.ts",
+          "line": 328,
+          "column": 11,
+          "member": "registerToolMessage"
+        },
+        {
+          "file": "restored-src/src/services/compact/microCompact.ts",
+          "line": 332,
+          "column": 29,
+          "member": "getToolResultsToDelete"
+        },
+        {
+          "file": "restored-src/src/services/compact/microCompact.ts",
+          "line": 336,
+          "column": 28,
+          "member": "createCacheEditsBlock"
+        }
+      ]
+    },
+    {
+      "module": "restored-src/src/services/compact/reactiveCompact.d.ts",
+      "classification": "eligible-editor-declaration",
+      "declarationFile": "restored-src/src/services/compact/reactiveCompact.d.ts",
+      "diagnosticCount": 8,
+      "missingExports": [
+        "isReactiveCompactEnabled",
+        "isReactiveOnlyMode",
+        "isWithheldMediaSizeError",
+        "isWithheldPromptTooLong",
+        "reactiveCompactOnPromptTooLong",
+        "tryReactiveCompact"
+      ],
+      "sites": [
+        {
+          "file": "restored-src/src/commands/compact/compact.ts",
+          "line": 87,
+          "column": 26,
+          "member": "isReactiveOnlyMode"
+        },
+        {
+          "file": "restored-src/src/commands/compact/compact.ts",
+          "line": 175,
+          "column": 36,
+          "member": "reactiveCompactOnPromptTooLong"
+        },
+        {
+          "file": "restored-src/src/query.ts",
+          "line": 627,
+          "column": 24,
+          "member": "isReactiveCompactEnabled"
+        },
+        {
+          "file": "restored-src/src/query.ts",
+          "line": 633,
+          "column": 26,
+          "member": "isReactiveCompactEnabled"
+        },
+        {
+          "file": "restored-src/src/query.ts",
+          "line": 811,
+          "column": 34,
+          "member": "isWithheldPromptTooLong"
+        },
+        {
+          "file": "restored-src/src/query.ts",
+          "line": 816,
+          "column": 32,
+          "member": "isWithheldMediaSizeError"
+        },
+        {
+          "file": "restored-src/src/query.ts",
+          "line": 1084,
+          "column": 26,
+          "member": "isWithheldMediaSizeError"
+        },
+        {
+          "file": "restored-src/src/query.ts",
+          "line": 1120,
+          "column": 49,
+          "member": "tryReactiveCompact"
+        }
+      ]
+    },
+    {
+      "module": "restored-src/src/services/contextCollapse/index.d.ts",
+      "classification": "eligible-editor-declaration",
+      "declarationFile": "restored-src/src/services/contextCollapse/index.d.ts",
+      "diagnosticCount": 10,
+      "missingExports": [
+        "applyCollapsesIfNeeded",
+        "getStats",
+        "initContextCollapse",
+        "isWithheldPromptTooLong",
+        "recoverFromOverflow",
+        "resetContextCollapse",
+        "subscribe"
+      ],
+      "sites": [
+        {
+          "file": "restored-src/src/commands/context/context-noninteractive.ts",
+          "line": 115,
+          "column": 13,
+          "member": "getStats"
+        },
+        {
+          "file": "restored-src/src/components/ContextVisualization.tsx",
+          "line": 27,
+          "column": 13,
+          "member": "getStats"
+        },
+        {
+          "file": "restored-src/src/components/TokenWarning.tsx",
+          "line": 31,
+          "column": 11,
+          "member": "getStats"
+        },
+        {
+          "file": "restored-src/src/components/TokenWarning.tsx",
+          "line": 31,
+          "column": 21,
+          "member": "subscribe"
+        },
+        {
+          "file": "restored-src/src/query.ts",
+          "line": 441,
+          "column": 52,
+          "member": "applyCollapsesIfNeeded"
+        },
+        {
+          "file": "restored-src/src/query.ts",
+          "line": 802,
+          "column": 34,
+          "member": "isWithheldPromptTooLong"
+        },
+        {
+          "file": "restored-src/src/query.ts",
+          "line": 1094,
+          "column": 43,
+          "member": "recoverFromOverflow"
+        },
+        {
+          "file": "restored-src/src/screens/REPL.tsx",
+          "line": 4932,
+          "column": 11,
+          "member": "resetContextCollapse"
+        },
+        {
+          "file": "restored-src/src/services/compact/postCompactCleanup.ts",
+          "line": 47,
+          "column": 9,
+          "member": "resetContextCollapse"
+        },
+        {
+          "file": "restored-src/src/setup.ts",
+          "line": 299,
+          "column": 9,
+          "member": "initContextCollapse"
+        }
+      ]
+    },
+    {
+      "module": "restored-src/src/services/contextCollapse/operations.d.ts",
+      "classification": "eligible-editor-declaration",
+      "declarationFile": "restored-src/src/services/contextCollapse/operations.d.ts",
+      "diagnosticCount": 2,
+      "missingExports": [
+        "projectView"
+      ],
+      "sites": [
+        {
+          "file": "restored-src/src/commands/context/context-noninteractive.ts",
+          "line": 52,
+          "column": 13,
+          "member": "projectView"
+        },
+        {
+          "file": "restored-src/src/commands/context/context.tsx",
+          "line": 22,
+          "column": 13,
+          "member": "projectView"
+        }
+      ]
+    },
+    {
+      "module": "restored-src/src/services/contextCollapse/persist.d.ts",
+      "classification": "eligible-editor-declaration",
+      "declarationFile": "restored-src/src/services/contextCollapse/persist.d.ts",
+      "diagnosticCount": 3,
+      "missingExports": [
+        "restoreFromEntries"
+      ],
+      "sites": [
+        {
+          "file": "restored-src/src/screens/ResumeConversation.tsx",
+          "line": 321,
+          "column": 11,
+          "member": "restoreFromEntries"
+        },
+        {
+          "file": "restored-src/src/utils/sessionRestore.ts",
+          "line": 131,
+          "column": 7,
+          "member": "restoreFromEntries"
+        },
+        {
+          "file": "restored-src/src/utils/sessionRestore.ts",
+          "line": 498,
+          "column": 7,
+          "member": "restoreFromEntries"
+        }
+      ]
+    },
+    {
+      "module": "restored-src/src/services/sessionTranscript/sessionTranscript.d.ts",
+      "classification": "eligible-editor-declaration",
+      "declarationFile": "restored-src/src/services/sessionTranscript/sessionTranscript.d.ts",
+      "diagnosticCount": 3,
+      "missingExports": [
+        "flushOnDateChange",
+        "writeSessionTranscriptSegment"
+      ],
+      "sites": [
+        {
+          "file": "restored-src/src/services/compact/compact.ts",
+          "line": 716,
+          "column": 37,
+          "member": "writeSessionTranscriptSegment"
+        },
+        {
+          "file": "restored-src/src/services/compact/compact.ts",
+          "line": 1060,
+          "column": 37,
+          "member": "writeSessionTranscriptSegment"
+        },
+        {
+          "file": "restored-src/src/utils/attachments.ts",
+          "line": 1439,
+          "column": 32,
+          "member": "flushOnDateChange"
+        }
+      ]
+    },
+    {
+      "module": "restored-src/src/services/skillSearch/featureCheck.d.ts",
+      "classification": "eligible-editor-declaration",
+      "declarationFile": "restored-src/src/services/skillSearch/featureCheck.d.ts",
+      "diagnosticCount": 2,
+      "missingExports": [
+        "isSkillSearchEnabled"
+      ],
+      "sites": [
+        {
+          "file": "restored-src/src/constants/prompts.ts",
+          "line": 779,
+          "column": 30,
+          "member": "isSkillSearchEnabled"
+        },
+        {
+          "file": "restored-src/src/utils/attachments.ts",
+          "line": 2694,
+          "column": 38,
+          "member": "isSkillSearchEnabled"
+        }
+      ]
+    },
+    {
+      "module": "restored-src/src/services/skillSearch/prefetch.d.ts",
+      "classification": "eligible-editor-declaration",
+      "declarationFile": "restored-src/src/services/skillSearch/prefetch.d.ts",
+      "diagnosticCount": 3,
+      "missingExports": [
+        "collectSkillDiscoveryPrefetch",
+        "getTurnZeroSkillDiscovery",
+        "startSkillDiscoveryPrefetch"
+      ],
+      "sites": [
+        {
+          "file": "restored-src/src/query.ts",
+          "line": 331,
+          "column": 49,
+          "member": "startSkillDiscoveryPrefetch"
+        },
+        {
+          "file": "restored-src/src/query.ts",
+          "line": 1622,
+          "column": 29,
+          "member": "collectSkillDiscoveryPrefetch"
+        },
+        {
+          "file": "restored-src/src/utils/attachments.ts",
+          "line": 806,
+          "column": 45,
+          "member": "getTurnZeroSkillDiscovery"
+        }
+      ]
+    },
+    {
+      "module": "restored-src/src/skills/mcpSkills.d.ts",
+      "classification": "eligible-editor-declaration",
+      "declarationFile": "restored-src/src/skills/mcpSkills.d.ts",
+      "diagnosticCount": 2,
+      "missingExports": [
+        "fetchMcpSkillsForClient"
+      ],
+      "sites": [
+        {
+          "file": "restored-src/src/services/mcp/client.ts",
+          "line": 120,
+          "column": 7,
+          "member": "fetchMcpSkillsForClient"
+        },
+        {
+          "file": "restored-src/src/services/mcp/useManageMCPConnections.ts",
+          "line": 25,
+          "column": 7,
+          "member": "fetchMcpSkillsForClient"
+        }
+      ]
+    },
+    {
+      "module": "restored-src/src/ssh/createSSHSession.d.ts",
+      "classification": "eligible-editor-declaration",
+      "declarationFile": "restored-src/src/ssh/createSSHSession.d.ts",
+      "diagnosticCount": 1,
+      "missingExports": [
+        "createSSHSession"
+      ],
+      "sites": [
+        {
+          "file": "restored-src/src/main.tsx",
+          "line": 4365,
+          "column": 17,
+          "member": "createSSHSession"
+        }
+      ]
+    },
+    {
+      "module": "restored-src/src/tasks/LocalWorkflowTask/LocalWorkflowTask.d.ts",
+      "classification": "eligible-editor-declaration",
+      "declarationFile": "restored-src/src/tasks/LocalWorkflowTask/LocalWorkflowTask.d.ts",
+      "diagnosticCount": 3,
+      "missingExports": [
+        "killWorkflowTask",
+        "retryWorkflowAgent",
+        "skipWorkflowAgent"
+      ],
+      "sites": [
+        {
+          "file": "restored-src/src/components/tasks/BackgroundTasksDialog.tsx",
+          "line": 143,
+          "column": 46,
+          "member": "killWorkflowTask"
+        },
+        {
+          "file": "restored-src/src/components/tasks/BackgroundTasksDialog.tsx",
+          "line": 144,
+          "column": 47,
+          "member": "skipWorkflowAgent"
+        },
+        {
+          "file": "restored-src/src/components/tasks/BackgroundTasksDialog.tsx",
+          "line": 145,
+          "column": 48,
+          "member": "retryWorkflowAgent"
+        }
+      ]
+    },
+    {
+      "module": "restored-src/src/tasks/MonitorMcpTask/MonitorMcpTask.d.ts",
+      "classification": "eligible-editor-declaration",
+      "declarationFile": "restored-src/src/tasks/MonitorMcpTask/MonitorMcpTask.d.ts",
+      "diagnosticCount": 2,
+      "missingExports": [
+        "killMonitorMcp",
+        "killMonitorMcpTasksForAgent"
+      ],
+      "sites": [
+        {
+          "file": "restored-src/src/components/tasks/BackgroundTasksDialog.tsx",
+          "line": 152,
+          "column": 42,
+          "member": "killMonitorMcp"
+        },
+        {
+          "file": "restored-src/src/tools/AgentTool/runAgent.ts",
+          "line": 852,
+          "column": 14,
+          "member": "killMonitorMcpTasksForAgent"
+        }
+      ]
+    },
+    {
+      "module": "restored-src/src/tools/DiscoverSkillsTool/prompt.d.ts",
+      "classification": "eligible-editor-declaration",
+      "declarationFile": "restored-src/src/tools/DiscoverSkillsTool/prompt.d.ts",
+      "diagnosticCount": 1,
+      "missingExports": [
+        "DISCOVER_SKILLS_TOOL_NAME"
+      ],
+      "sites": [
+        {
+          "file": "restored-src/src/constants/prompts.ts",
+          "line": 91,
+          "column": 7,
+          "member": "DISCOVER_SKILLS_TOOL_NAME"
+        }
+      ]
+    },
+    {
+      "module": "restored-src/src/tools/MonitorTool/MonitorTool.d.ts",
+      "classification": "eligible-editor-declaration",
+      "declarationFile": "restored-src/src/tools/MonitorTool/MonitorTool.d.ts",
+      "diagnosticCount": 1,
+      "missingExports": [
+        "MonitorTool"
+      ],
+      "sites": [
+        {
+          "file": "restored-src/src/components/permissions/PermissionRequest.tsx",
+          "line": 62,
+          "column": 7,
+          "member": "MonitorTool"
+        }
+      ]
+    },
+    {
+      "module": "restored-src/src/tools/OverflowTestTool/OverflowTestTool.d.ts",
+      "classification": "eligible-editor-declaration",
+      "declarationFile": "restored-src/src/tools/OverflowTestTool/OverflowTestTool.d.ts",
+      "diagnosticCount": 1,
+      "missingExports": [
+        "OVERFLOW_TEST_TOOL_NAME"
+      ],
+      "sites": [
+        {
+          "file": "restored-src/src/utils/permissions/classifierDecision.ts",
+          "line": 35,
+          "column": 7,
+          "member": "OVERFLOW_TEST_TOOL_NAME"
+        }
+      ]
+    },
+    {
+      "module": "restored-src/src/tools/ReviewArtifactTool/ReviewArtifactTool.d.ts",
+      "classification": "eligible-editor-declaration",
+      "declarationFile": "restored-src/src/tools/ReviewArtifactTool/ReviewArtifactTool.d.ts",
+      "diagnosticCount": 1,
+      "missingExports": [
+        "ReviewArtifactTool"
+      ],
+      "sites": [
+        {
+          "file": "restored-src/src/components/permissions/PermissionRequest.tsx",
+          "line": 38,
+          "column": 7,
+          "member": "ReviewArtifactTool"
+        }
+      ]
+    },
+    {
+      "module": "restored-src/src/tools/SendUserFileTool/prompt.d.ts",
+      "classification": "eligible-editor-declaration",
+      "declarationFile": "restored-src/src/tools/SendUserFileTool/prompt.d.ts",
+      "diagnosticCount": 3,
+      "missingExports": [
+        "SEND_USER_FILE_TOOL_NAME"
+      ],
+      "sites": [
+        {
+          "file": "restored-src/src/components/Messages.tsx",
+          "line": 113,
+          "column": 7,
+          "member": "SEND_USER_FILE_TOOL_NAME"
+        },
+        {
+          "file": "restored-src/src/tools/ToolSearchTool/prompt.ts",
+          "line": 18,
+          "column": 7,
+          "member": "SEND_USER_FILE_TOOL_NAME"
+        },
+        {
+          "file": "restored-src/src/utils/conversationRecovery.ts",
+          "line": 70,
+          "column": 7,
+          "member": "SEND_USER_FILE_TOOL_NAME"
+        }
+      ]
+    },
+    {
+      "module": "restored-src/src/tools/SnipTool/prompt.d.ts",
+      "classification": "eligible-editor-declaration",
+      "declarationFile": "restored-src/src/tools/SnipTool/prompt.d.ts",
+      "diagnosticCount": 1,
+      "missingExports": [
+        "SNIP_TOOL_NAME"
+      ],
+      "sites": [
+        {
+          "file": "restored-src/src/utils/collapseReadSearch.ts",
+          "line": 40,
+          "column": 7,
+          "member": "SNIP_TOOL_NAME"
+        }
+      ]
+    },
+    {
+      "module": "restored-src/src/tools/TerminalCaptureTool/prompt.d.ts",
+      "classification": "eligible-editor-declaration",
+      "declarationFile": "restored-src/src/tools/TerminalCaptureTool/prompt.d.ts",
+      "diagnosticCount": 1,
+      "missingExports": [
+        "TERMINAL_CAPTURE_TOOL_NAME"
+      ],
+      "sites": [
+        {
+          "file": "restored-src/src/utils/permissions/classifierDecision.ts",
+          "line": 30,
+          "column": 7,
+          "member": "TERMINAL_CAPTURE_TOOL_NAME"
+        }
+      ]
+    },
+    {
+      "module": "restored-src/src/tools/TungstenTool/TungstenTool.d.ts",
+      "classification": "eligible-editor-declaration",
+      "declarationFile": "restored-src/src/tools/TungstenTool/TungstenTool.d.ts",
+      "diagnosticCount": 2,
+      "missingExports": [
+        "clearSessionsWithTungstenUsage",
+        "resetInitializationState"
+      ],
+      "sites": [
+        {
+          "file": "restored-src/src/commands/clear/caches.ts",
+          "line": 97,
+          "column": 10,
+          "member": "clearSessionsWithTungstenUsage"
+        },
+        {
+          "file": "restored-src/src/commands/clear/caches.ts",
+          "line": 97,
+          "column": 42,
+          "member": "resetInitializationState"
+        }
+      ]
+    },
+    {
+      "module": "restored-src/src/tools/VerifyPlanExecutionTool/constants.d.ts",
+      "classification": "eligible-editor-declaration",
+      "declarationFile": "restored-src/src/tools/VerifyPlanExecutionTool/constants.d.ts",
+      "diagnosticCount": 1,
+      "missingExports": [
+        "VERIFY_PLAN_EXECUTION_TOOL_NAME"
+      ],
+      "sites": [
+        {
+          "file": "restored-src/src/utils/permissions/classifierDecision.ts",
+          "line": 41,
+          "column": 9,
+          "member": "VERIFY_PLAN_EXECUTION_TOOL_NAME"
+        }
+      ]
+    },
+    {
+      "module": "restored-src/src/tools/WebBrowserTool/WebBrowserPanel.d.ts",
+      "classification": "eligible-editor-declaration",
+      "declarationFile": "restored-src/src/tools/WebBrowserTool/WebBrowserPanel.d.ts",
+      "diagnosticCount": 1,
+      "missingExports": [
+        "WebBrowserPanel"
+      ],
+      "sites": [
+        {
+          "file": "restored-src/src/screens/REPL.tsx",
+          "line": 6214,
+          "column": 44,
+          "member": "WebBrowserPanel"
+        }
+      ]
+    },
+    {
+      "module": "restored-src/src/tools/WorkflowTool/WorkflowPermissionRequest.d.ts",
+      "classification": "eligible-editor-declaration",
+      "declarationFile": "restored-src/src/tools/WorkflowTool/WorkflowPermissionRequest.d.ts",
+      "diagnosticCount": 1,
+      "missingExports": [
+        "WorkflowPermissionRequest"
+      ],
+      "sites": [
+        {
+          "file": "restored-src/src/components/permissions/PermissionRequest.tsx",
+          "line": 56,
+          "column": 7,
+          "member": "WorkflowPermissionRequest"
+        }
+      ]
+    },
+    {
+      "module": "restored-src/src/tools/WorkflowTool/WorkflowTool.d.ts",
+      "classification": "eligible-editor-declaration",
+      "declarationFile": "restored-src/src/tools/WorkflowTool/WorkflowTool.d.ts",
+      "diagnosticCount": 1,
+      "missingExports": [
+        "WorkflowTool"
+      ],
+      "sites": [
+        {
+          "file": "restored-src/src/components/permissions/PermissionRequest.tsx",
+          "line": 50,
+          "column": 7,
+          "member": "WorkflowTool"
+        }
+      ]
+    },
+    {
+      "module": "restored-src/src/utils/attributionHooks.d.ts",
+      "classification": "eligible-editor-declaration",
+      "declarationFile": "restored-src/src/utils/attributionHooks.d.ts",
+      "diagnosticCount": 3,
+      "missingExports": [
+        "clearAttributionCaches",
+        "registerAttributionHooks",
+        "sweepFileContentCache"
+      ],
+      "sites": [
+        {
+          "file": "restored-src/src/commands/clear/caches.ts",
+          "line": 107,
+          "column": 10,
+          "member": "clearAttributionCaches"
+        },
+        {
+          "file": "restored-src/src/services/compact/postCompactCleanup.ts",
+          "line": 73,
+          "column": 9,
+          "member": "sweepFileContentCache"
+        },
+        {
+          "file": "restored-src/src/setup.ts",
+          "line": 356,
+          "column": 14,
+          "member": "registerAttributionHooks"
+        }
+      ]
+    },
+    {
+      "module": "restored-src/src/utils/attributionTrailer.d.ts",
+      "classification": "eligible-editor-declaration",
+      "declarationFile": "restored-src/src/utils/attributionTrailer.d.ts",
+      "diagnosticCount": 1,
+      "missingExports": [
+        "buildPRTrailers"
+      ],
+      "sites": [
+        {
+          "file": "restored-src/src/utils/attribution.ts",
+          "line": 384,
+          "column": 13,
+          "member": "buildPRTrailers"
+        }
+      ]
+    },
+    {
+      "module": "restored-src/src/utils/ccshareResume.d.ts",
+      "classification": "eligible-editor-declaration",
+      "declarationFile": "restored-src/src/utils/ccshareResume.d.ts",
+      "diagnosticCount": 1,
+      "missingExports": [
+        "parseCcshareId"
+      ],
+      "sites": [
+        {
+          "file": "restored-src/src/main.tsx",
+          "line": 4885,
+          "column": 21,
+          "member": "parseCcshareId"
+        }
+      ]
+    },
+    {
+      "module": "restored-src/src/utils/eventLoopStallDetector.d.ts",
+      "classification": "eligible-editor-declaration",
+      "declarationFile": "restored-src/src/utils/eventLoopStallDetector.d.ts",
+      "diagnosticCount": 1,
+      "missingExports": [
+        "startEventLoopStallDetector"
+      ],
+      "sites": [
+        {
+          "file": "restored-src/src/main.tsx",
+          "line": 697,
+          "column": 9,
+          "member": "startEventLoopStallDetector"
+        }
+      ]
+    },
+    {
+      "module": "restored-src/src/utils/postCommitAttribution.d.ts",
+      "classification": "eligible-editor-declaration",
+      "declarationFile": "restored-src/src/utils/postCommitAttribution.d.ts",
+      "diagnosticCount": 1,
+      "missingExports": [
+        "installPrepareCommitMsgHook"
+      ],
+      "sites": [
+        {
+          "file": "restored-src/src/utils/worktree.ts",
+          "line": 609,
+          "column": 12,
+          "member": "installPrepareCommitMsgHook"
+        }
+      ]
+    },
+    {
+      "module": "restored-src/src/utils/protectedNamespace.d.ts",
+      "classification": "eligible-editor-declaration",
+      "declarationFile": "restored-src/src/utils/protectedNamespace.d.ts",
+      "diagnosticCount": 1,
+      "missingExports": [
+        "checkProtectedNamespace"
+      ],
+      "sites": [
+        {
+          "file": "restored-src/src/utils/envUtils.ts",
+          "line": 143,
+          "column": 7,
+          "member": "checkProtectedNamespace"
+        }
+      ]
+    },
+    {
+      "module": "restored-src/src/utils/sdkHeapDumpMonitor.d.ts",
+      "classification": "eligible-editor-declaration",
+      "declarationFile": "restored-src/src/utils/sdkHeapDumpMonitor.d.ts",
+      "diagnosticCount": 1,
+      "missingExports": [
+        "startSdkMemoryMonitor"
+      ],
+      "sites": [
+        {
+          "file": "restored-src/src/main.tsx",
+          "line": 3919,
+          "column": 17,
+          "member": "startSdkMemoryMonitor"
+        }
+      ]
+    },
+    {
+      "module": "restored-src/src/utils/sessionDataUploader.d.ts",
+      "classification": "eligible-editor-declaration",
+      "declarationFile": "restored-src/src/utils/sessionDataUploader.d.ts",
+      "diagnosticCount": 1,
+      "missingExports": [
+        "createSessionTurnUploader"
+      ],
+      "sites": [
+        {
+          "file": "restored-src/src/main.tsx",
+          "line": 4203,
+          "column": 30,
+          "member": "createSessionTurnUploader"
+        }
+      ]
+    },
+    {
+      "module": "restored-src/src/utils/systemThemeWatcher.d.ts",
+      "classification": "eligible-editor-declaration",
+      "declarationFile": "restored-src/src/utils/systemThemeWatcher.d.ts",
+      "diagnosticCount": 1,
+      "missingExports": [
+        "watchSystemTheme"
+      ],
+      "sites": [
+        {
+          "file": "restored-src/src/components/design-system/ThemeProvider.tsx",
+          "line": 84,
+          "column": 12,
+          "member": "watchSystemTheme"
+        }
+      ]
+    },
+    {
+      "module": "restored-src/src/utils/taskSummary.d.ts",
+      "classification": "eligible-editor-declaration",
+      "declarationFile": "restored-src/src/utils/taskSummary.d.ts",
+      "diagnosticCount": 2,
+      "missingExports": [
+        "maybeGenerateTaskSummary",
+        "shouldGenerateTaskSummary"
+      ],
+      "sites": [
+        {
+          "file": "restored-src/src/query.ts",
+          "line": 1688,
+          "column": 28,
+          "member": "shouldGenerateTaskSummary"
+        },
+        {
+          "file": "restored-src/src/query.ts",
+          "line": 1690,
+          "column": 28,
+          "member": "maybeGenerateTaskSummary"
+        }
+      ]
+    },
+    {
+      "module": "restored-src/src/utils/udsClient.d.ts",
+      "classification": "eligible-editor-declaration",
+      "declarationFile": "restored-src/src/utils/udsClient.d.ts",
+      "diagnosticCount": 2,
+      "missingExports": [
+        "listAllLiveSessions",
+        "sendToUdsSocket"
+      ],
+      "sites": [
+        {
+          "file": "restored-src/src/tools/SendMessageTool/SendMessageTool.ts",
+          "line": 777,
+          "column": 19,
+          "member": "sendToUdsSocket"
+        },
+        {
+          "file": "restored-src/src/utils/conversationRecovery.ts",
+          "line": 494,
+          "column": 19,
+          "member": "listAllLiveSessions"
+        }
+      ]
+    },
+    {
+      "module": "restored-src/src/utils/udsMessaging.d.ts",
+      "classification": "eligible-editor-declaration",
+      "declarationFile": "restored-src/src/utils/udsMessaging.d.ts",
+      "diagnosticCount": 2,
+      "missingExports": [
+        "getDefaultUdsSocketPath",
+        "startUdsMessaging"
+      ],
+      "sites": [
+        {
+          "file": "restored-src/src/setup.ts",
+          "line": 97,
+          "column": 15,
+          "member": "startUdsMessaging"
+        },
+        {
+          "file": "restored-src/src/setup.ts",
+          "line": 98,
+          "column": 34,
+          "member": "getDefaultUdsSocketPath"
+        }
+      ]
+    },
+    {
+      "module": "url-handler-napi",
+      "classification": "external-or-unresolved",
+      "declarationFile": null,
+      "diagnosticCount": 1,
+      "missingExports": [
+        "waitForUrlEvent"
+      ],
+      "sites": [
+        {
+          "file": "restored-src/src/utils/deepLink/protocolHandler.ts",
+          "line": 95,
+          "column": 13,
+          "member": "waitForUrlEvent"
+        }
+      ]
+    }
+  ]
+}

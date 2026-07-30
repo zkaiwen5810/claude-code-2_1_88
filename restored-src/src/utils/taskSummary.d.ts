@@ -5,3 +5,5 @@ declare const defaultExport: any
 export default defaultExport
 export const count: any
 export type count = any
+export const maybeGenerateTaskSummary: any
+export const shouldGenerateTaskSummary: any

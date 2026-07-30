@@ -9,3 +9,4 @@ export const SkillToolProgress: any
 export type SkillToolProgress = any
 export const isMcpInstructionsDeltaEnabled: any
 export type isMcpInstructionsDeltaEnabled = any
+export const isSkillSearchEnabled: any

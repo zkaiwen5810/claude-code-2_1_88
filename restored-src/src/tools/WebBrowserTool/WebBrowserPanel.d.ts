@@ -5,3 +5,4 @@ declare const defaultExport: any
 export default defaultExport
 export const TungstenLiveMonitor: any
 export type TungstenLiveMonitor = any
+export const WebBrowserPanel: any

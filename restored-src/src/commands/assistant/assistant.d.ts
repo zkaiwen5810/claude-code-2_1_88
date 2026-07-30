@@ -5,3 +5,4 @@ declare const defaultExport: any
 export default defaultExport
 export const computeDefaultInstallDir: any
 export type computeDefaultInstallDir = any
+export const NewInstallWizard: any

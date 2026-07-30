@@ -5,3 +5,5 @@ declare const defaultExport: any
 export default defaultExport
 export const postInterClaudeMessage: any
 export type postInterClaudeMessage = any
+export const listAllLiveSessions: any
+export const sendToUdsSocket: any

@@ -15,3 +15,4 @@ export const promptCount: any
 export type promptCount = any
 export const shortModelName: any
 export type shortModelName = any
+export const buildPRTrailers: any

@@ -11,3 +11,6 @@ export const tmuxSessionName: any
 export type tmuxSessionName = any
 export const worktreePRNumber: any
 export type worktreePRNumber = any
+export const clearAttributionCaches: any
+export const registerAttributionHooks: any
+export const sweepFileContentCache: any

@@ -5,3 +5,4 @@ declare const defaultExport: any
 export default defaultExport
 export const isWorktreeModeEnabled: any
 export type isWorktreeModeEnabled = any
+export const isKairosEnabled: any

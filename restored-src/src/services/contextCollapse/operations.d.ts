@@ -15,3 +15,4 @@ export const renderToAnsiString: any
 export type renderToAnsiString = any
 export const tools: any
 export type tools = any
+export const projectView: any

@@ -9,3 +9,9 @@ export const buildEffectiveSystemPrompt: any
 export type buildEffectiveSystemPrompt = any
 export const buildPostCompactMessages: any
 export type buildPostCompactMessages = any
+export const isReactiveCompactEnabled: any
+export const isReactiveOnlyMode: any
+export const isWithheldMediaSizeError: any
+export const isWithheldPromptTooLong: any
+export const reactiveCompactOnPromptTooLong: any
+export const tryReactiveCompact: any

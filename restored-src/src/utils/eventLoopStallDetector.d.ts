@@ -9,3 +9,4 @@ export const getUserContext: any
 export type getUserContext = any
 export const tips: any
 export type tips = any
+export const startEventLoopStallDetector: any

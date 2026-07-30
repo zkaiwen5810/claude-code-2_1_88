@@ -43,3 +43,4 @@ export const thinkingConfig: any
 export type thinkingConfig = any
 export const worktreePaths: any
 export type worktreePaths = any
+export const restoreFromEntries: any

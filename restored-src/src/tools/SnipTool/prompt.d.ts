@@ -11,3 +11,4 @@ export const isMemoryDirectory: any
 export type isMemoryDirectory = any
 export const isShellCommandTargetingMemory: any
 export type isShellCommandTargetingMemory = any
+export const SNIP_TOOL_NAME: any

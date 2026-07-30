@@ -5,3 +5,5 @@ declare const defaultExport: any
 export default defaultExport
 export const feature: any
 export type feature = any
+export const flushOnDateChange: any
+export const writeSessionTranscriptSegment: any

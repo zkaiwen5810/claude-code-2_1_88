@@ -11,3 +11,4 @@ export const ServerResource: any
 export type ServerResource = any
 export const getLoggingSafeMcpBaseUrl: any
 export type getLoggingSafeMcpBaseUrl = any
+export const fetchMcpSkillsForClient: any

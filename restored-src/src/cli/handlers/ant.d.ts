@@ -221,3 +221,12 @@ export const worktreeEnabled: any
 export type worktreeEnabled = any
 export const writeServerLock: any
 export type writeServerLock = any
+export const completionHandler: any
+export const errorHandler: any
+export const exportHandler: any
+export const logHandler: any
+export const taskCreateHandler: any
+export const taskDirHandler: any
+export const taskGetHandler: any
+export const taskListHandler: any
+export const taskUpdateHandler: any

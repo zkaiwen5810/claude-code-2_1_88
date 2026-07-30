@@ -13,3 +13,6 @@ export const getAttachmentMessages: any
 export type getAttachmentMessages = any
 export const startRelevantMemoryPrefetch: any
 export type startRelevantMemoryPrefetch = any
+export const collectSkillDiscoveryPrefetch: any
+export const getTurnZeroSkillDiscovery: any
+export const startSkillDiscoveryPrefetch: any

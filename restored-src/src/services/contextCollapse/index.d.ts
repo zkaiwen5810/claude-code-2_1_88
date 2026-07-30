@@ -299,3 +299,10 @@ export const waitingFor: any
 export type waitingFor = any
 export const worktreePRNumber: any
 export type worktreePRNumber = any
+export const applyCollapsesIfNeeded: any
+export const getStats: any
+export const initContextCollapse: any
+export const isWithheldPromptTooLong: any
+export const recoverFromOverflow: any
+export const resetContextCollapse: any
+export const subscribe: any

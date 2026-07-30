@@ -81,3 +81,5 @@ export const userFacingName: any
 export type userFacingName = any
 export const worktreePath: any
 export type worktreePath = any
+export const killMonitorMcp: any
+export const killMonitorMcpTasksForAgent: any

@@ -11,3 +11,5 @@ export const isAutoMemFile: any
 export type isAutoMemFile = any
 export const memoryScopeForPath: any
 export type memoryScopeForPath = any
+export const logMemoryRecallShape: any
+export const logMemoryWriteShape: any

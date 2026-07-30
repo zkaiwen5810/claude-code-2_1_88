@@ -11,3 +11,6 @@ export const RemoteAgentTaskState: any
 export type RemoteAgentTaskState = any
 export const ShellDetailDialog: any
 export type ShellDetailDialog = any
+export const killWorkflowTask: any
+export const retryWorkflowAgent: any
+export const skipWorkflowAgent: any

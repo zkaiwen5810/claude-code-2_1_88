@@ -75,3 +75,5 @@ export const skills: any
 export type skills = any
 export const warnings: any
 export type warnings = any
+export const SnapshotUpdateDialog: any
+export const buildMergePrompt: any

@@ -31,3 +31,8 @@ export const profileCheckpoint: any
 export type profileCheckpoint = any
 export const waitForPolicyLimitsToLoad: any
 export type waitForPolicyLimitsToLoad = any
+export const attachHandler: any
+export const handleBgFlag: any
+export const killHandler: any
+export const logsHandler: any
+export const psHandler: any

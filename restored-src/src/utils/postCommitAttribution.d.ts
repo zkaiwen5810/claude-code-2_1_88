@@ -5,3 +5,4 @@ declare const defaultExport: any
 export default defaultExport
 export const worktreePath: any
 export type worktreePath = any
+export const installPrepareCommitMsgHook: any

@@ -221,3 +221,4 @@ export const worktreeEnabled: any
 export type worktreeEnabled = any
 export const writeServerLock: any
 export type writeServerLock = any
+export const up: any

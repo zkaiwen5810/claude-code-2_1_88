@@ -29,3 +29,7 @@ export const userFacingName: any
 export type userFacingName = any
 export const userFacingNameBackgroundColor: any
 export type userFacingNameBackgroundColor = any
+export const activateProactive: any
+export const deactivateProactive: any
+export const isProactiveActive: any
+export const isProactivePaused: any

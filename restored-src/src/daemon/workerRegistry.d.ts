@@ -11,3 +11,4 @@ export const getSystemPrompt: any
 export type getSystemPrompt = any
 export const profileCheckpoint: any
 export type profileCheckpoint = any
+export const runDaemonWorker: any

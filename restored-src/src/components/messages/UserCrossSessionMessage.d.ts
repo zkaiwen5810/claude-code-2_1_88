@@ -25,3 +25,4 @@ export const timestamp: any
 export type timestamp = any
 export const verbose: any
 export type verbose = any
+export const UserCrossSessionMessage: any

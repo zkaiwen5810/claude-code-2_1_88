@@ -5,3 +5,4 @@ declare const defaultExport: any
 export default defaultExport
 export const ShellDetailDialog: any
 export type ShellDetailDialog = any
+export const MonitorMcpDetailDialog: any

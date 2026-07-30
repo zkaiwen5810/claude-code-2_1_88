@@ -7,3 +7,4 @@ export const children: any
 export type children = any
 export const initialState: any
 export type initialState = any
+export const watchSystemTheme: any

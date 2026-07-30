@@ -5,3 +5,4 @@ declare const defaultExport: any
 export default defaultExport
 export const isMcpInstructionsDeltaEnabled: any
 export type isMcpInstructionsDeltaEnabled = any
+export const getCachedMCConfig: any

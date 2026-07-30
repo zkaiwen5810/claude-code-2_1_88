@@ -797,6 +797,55 @@ The remaining errors are not reliable evidence of real bugs. Many are side effec
 
 Fixing all of those by editing `.ts` and `.tsx` files would alter recovered source. The project rule is: do not touch implementation files just to satisfy these diagnostics. Keeping semantic checking enabled makes the diagnostics visible for readers who want the hints.
 
+## Problem 14: Editor Stubs Were Missing Observed Value Exports
+
+### Why It Happened
+
+Many absent, feature-gated internal modules already had targeted editor-only
+`.d.ts` files, but those declarations did not expose every member accessed
+through a `typeof import(...)` namespace. TypeScript therefore resolved the
+module and still reported `TS2339` at the recovered call site.
+
+Returning `false` from the `bun:bundle` `feature()` shim does not solve this.
+TypeScript checks both conditional branches and resolves type queries even
+when a bundler would eliminate one branch.
+
+### How It Was Fixed
+
+`scripts/audit-editor-stub-exports.js` runs the pinned TypeScript check,
+extracts only this diagnostic shape, and classifies the referenced module.
+With `--fix`, it appends declarations of this form:
+
+```ts
+export const observedMember: any
+```
+
+The fixer only touches `.d.ts` files whose header explicitly identifies them
+as editor-only declarations. It does not modify recovered implementations,
+external package declarations, wildcard modules, or the released package.
+Only value exports observed at real call sites are added.
+
+The before and after records are:
+
+- `docs/EDITOR_STUB_EXPORT_AUDIT_BEFORE.json`
+- `docs/EDITOR_STUB_EXPORT_AUDIT_AFTER.json`
+
+The measured change was:
+
+| Measure | Before | After |
+| --- | ---: | ---: |
+| Total TypeScript diagnostics | 629 | 493 |
+| Module-namespace member diagnostics | 154 | 20 |
+| Modules in that diagnostic category | 70 | 6 |
+| Eligible editor declaration modules | 64 | 0 |
+| Eligible missing exports | 111 | 0 |
+
+The 20 remaining diagnostics are deliberately outside this mechanical fix:
+five external or unresolved packages and the recovered implementation
+`src/constants/betas.ts`. Those require real package metadata, an exact native
+module shim, or separate source evidence rather than expanding an absent-module
+stub.
+
 ## What Is Fixed Now
 
 Import/module resolution is fixed, and semantic checking is enabled.

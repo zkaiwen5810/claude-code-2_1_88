@@ -13,3 +13,4 @@ export const sessionId: any
 export type sessionId = any
 export const shouldShowAppUpgradeMessage: any
 export type shouldShowAppUpgradeMessage = any
+export const sanitizeInboundWebhookContent: any

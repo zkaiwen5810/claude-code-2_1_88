@@ -53,3 +53,4 @@ export const verbose: any
 export type verbose = any
 export const width: any
 export type width = any
+export const SnipBoundaryMessage: any

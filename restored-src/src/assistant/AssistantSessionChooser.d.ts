@@ -3,3 +3,4 @@
 // it is not a runtime implementation.
 declare const defaultExport: any
 export default defaultExport
+export const AssistantSessionChooser: any

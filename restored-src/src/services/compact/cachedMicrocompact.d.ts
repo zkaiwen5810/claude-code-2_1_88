@@ -11,3 +11,11 @@ export const isAgenticQuery: any
 export type isAgenticQuery = any
 export const isModelSupportedForCacheEditing: any
 export type isModelSupportedForCacheEditing = any
+export const createCacheEditsBlock: any
+export const createCachedMCState: any
+export const getToolResultsToDelete: any
+export const isCachedMicrocompactEnabled: any
+export const markToolsSentToAPI: any
+export const registerToolMessage: any
+export const registerToolResult: any
+export const resetCachedMCState: any

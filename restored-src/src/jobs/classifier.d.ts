@@ -17,3 +17,4 @@ export const isTeammate: any
 export type isTeammate = any
 export const startRelevantMemoryPrefetch: any
 export type startRelevantMemoryPrefetch = any
+export const classifyAndWriteState: any

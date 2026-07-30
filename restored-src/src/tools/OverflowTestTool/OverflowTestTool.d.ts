@@ -5,3 +5,4 @@ declare const defaultExport: any
 export default defaultExport
 export const YOLO_CLASSIFIER_TOOL_NAME: any
 export type YOLO_CLASSIFIER_TOOL_NAME = any
+export const OVERFLOW_TEST_TOOL_NAME: any

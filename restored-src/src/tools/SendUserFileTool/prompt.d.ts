@@ -13,3 +13,4 @@ export const agentDefinitions: any
 export type agentDefinitions = any
 export const t1: any
 export type t1 = any
+export const SEND_USER_FILE_TOOL_NAME: any
