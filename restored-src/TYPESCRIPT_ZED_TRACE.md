@@ -501,12 +501,18 @@ No recovered implementation files should be edited for this category.
 
 The fix was kept in declaration-only files:
 
-- Added permissive SDK type aliases in `restored-src/src/entrypoints/sdk/coreTypes.generated.d.ts`.
-- Added missing aliases such as `HookEvent` and `ExitReason` in the same declaration stub.
+- Added SDK type aliases in `restored-src/src/entrypoints/sdk/coreTypes.generated.d.ts`.
+- Initially added missing aliases such as `HookEvent` and `ExitReason` as permissive placeholders.
+- Later reconstructed the hook-event, hook-input, hook-output, and permission
+  declarations from the recovered `sdk/coreSchemas.ts`, cross-checking their
+  generated structure against the published Agent SDK artifacts corresponding
+  to Claude Code 2.1.87 and 2.1.89. There is no published 2.1.88 Agent SDK
+  artifact, so these remain explicitly best-effort rather than upstream source
+  truth.
 - Made `InferShape` and `SdkMcpToolDefinition` generic in `restored-src/src/entrypoints/sdk/runtimeTypes.d.ts`, because `agentSdkTypes.ts` uses them like `InferShape<Schema>` and `SdkMcpToolDefinition<Schema>`.
 - Removed duplicate SDK message placeholder exports from `restored-src/src/entrypoints/sdk/toolTypes.d.ts`, so `export *` no longer produced ambiguous exports.
 
-Example declaration-only shape:
+Example declaration-only shape before the hook/permission reconstruction:
 
 ```ts
 export type PermissionMode = any
@@ -527,6 +533,15 @@ export type SdkMcpToolDefinition<_Schema = any> = any
 The files `agentSdkTypes.ts` and `coreTypes.ts` are recovered implementation/source files. Editing them would mix editor-repair work with recovered source content.
 
 Because the missing names are type-level declarations for editor analysis, the safer fix is to repair the editor-only `.d.ts` stubs that feed the re-export chain.
+
+The reconstructed hook declarations preserve required fields from the recovered
+schemas and adjacent published declarations. With this workspace's
+`strict: false` setting, Zod inference treats some required object fields as
+optional and the standard semantic check therefore reports several hook-local
+assignability/narrowing diagnostics. Running the same targeted check with
+`strictNullChecks: true` makes the reconstructed hook types and the Zod schemas
+agree. The declarations are intentionally not weakened to accommodate the
+non-strict inference artifact.
 
 This keeps a clear boundary:
 
