@@ -11,6 +11,7 @@ import type {
 } from '@anthropic-ai/sdk/resources/beta/messages/messages.mjs'
 import type { ContentBlockParam } from '@anthropic-ai/sdk/resources/index.mjs'
 import type { Attachment } from '../utils/attachments.js'
+import type { HookProgress } from './hooks.js'
 
 type MessageUUID = UUID
 
@@ -180,10 +181,19 @@ export type NormalizedMessage =
   | ProgressMessage
   | SystemMessage
 
+/**
+ * Hook execution yields both persistent attachment messages and transient
+ * progress messages. createAttachmentMessage intentionally returns the broad
+ * AttachmentMessage shape, while executeHooks constructs progress values with
+ * HookProgress data.
+ */
+export type HookResultMessage =
+  | AttachmentMessage
+  | ProgressMessage<HookProgress>
+
 // The following presentation-layer shapes are outside the query-loop recovery
 // scope. Keep them permissive rather than inventing unsupported detail.
 export type RenderableMessage = any
-export type HookResultMessage = any
 export type GroupedToolUseMessage = any
 export type CollapsedReadSearchGroup = any
 
