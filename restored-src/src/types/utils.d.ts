@@ -13,7 +13,6 @@ export const COMMAND_MESSAGE_TAG: any
 export type COMMAND_MESSAGE_TAG = any
 export const COMMAND_NAME_TAG: any
 export type COMMAND_NAME_TAG = any
-export const DeepImmutable: any
 /**
  * Best-effort reconstruction of the missing source type.
  *
