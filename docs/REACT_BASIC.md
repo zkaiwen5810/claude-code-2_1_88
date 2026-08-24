@@ -1,107 +1,224 @@
-## Take `REPL.tsx` AS A EXAMPLE
-`REPL.tsx` exports a React function component (almost certainly the default export, conventionally named `REPL`). The evidence I can see from the conversation context:
+# React Basics Using the Recovered `REPL.tsx`
 
-- It's a `.tsx` file (TypeScript + JSX)
-- It uses React hooks: `useRef`, `useState`, `useEffect`, `useCallback`, `useSyncExternalStore` (e.g. REPL.tsx:900, 904, 3861, 3889)
-- It returns JSX — there's a large fragment at REPL.tsx:4905 and JSX usages at lines 4410, 4552 that pass props like `onSubmit`, `vimMode`, `setVimMode`, etc. to child components like `<CommandKeybindingHandlers>` and `<PromptInput>`
+This guide uses `restored-src/src/screens/REPL.tsx` as a concrete example. The
+file has been restored from the readable `sourcesContent` in its nested source
+map; it is no longer React Compiler cache output. See
+[`NESTED_SOURCE_MAP_RECOVERY.md`](NESTED_SOURCE_MAP_RECOVERY.md) for the
+recovery process and provenance caveats.
 
-I haven't read the very top of the file, so I can't quote the exact `export default function REPL(...)` line, but the patterns inside are unmistakably a function component.
+The recovered source is useful evidence, but this remains an unofficial
+reconstruction of the released package rather than authoritative upstream
+source truth.
 
----
+## What `REPL` actually is
 
-## What is a "component" in React?
+`REPL` is a **named function component**, not a default export. Its declaration
+starts at `screens/REPL.tsx:908`:
 
-A component is just **a function (or class) that returns a description of UI** — a tree of elements written in JSX. React takes that description and turns it into actual output.
-
-### Function component (the modern kind)
-
-```jsx
-function Greeting({ name }) {
-  return <h1>Hello, {name}</h1>
+```tsx
+export function REPL({
+  commands: initialCommands,
+  debug,
+  // ...many more props...
+  thinkingConfig,
+}: Props): React.ReactNode {
+  // ...hooks and render calculations...
 }
 ```
 
-That's it. A regular JavaScript function that:
+The recovered file provides direct evidence that it is a component:
 
-1. Receives data via `props` (an object of inputs)
-2. Optionally uses **hooks** (`useState`, `useEffect`, etc.) to read or store data
-3. Returns JSX — a tree describing what should appear on screen
+- Its capitalized function is rendered as `<REPL {...replProps} />`.
+- It accepts one `Props` object.
+- It calls built-in Hooks such as `useState`, `useEffect`, `useMemo`, and
+  `useSyncExternalStore`, plus many custom Hooks.
+- It returns a React node. Near the end it returns `mainReturn`, optionally
+  wrapped in `<AlternateScreen>` for fullscreen rendering.
 
-React does **not** call your function continuously. It calls it, gets a tree, then calls it again later when something changes, gets a new tree, and figures out what actually changed. Your function is essentially a pure recipe: "given these inputs, here's what the UI should look like."
+The file is large because `REPL` coordinates the main interactive screen. It
+composes smaller components such as `PromptInput`, keybinding handlers,
+dialogs, transcript views, and permission UI.
 
-### Class component (the older kind)
+## Components, elements, and JSX
 
-Before hooks existed, components had to be classes extending `React.Component`, with `render()` returning JSX and lifecycle methods like `componentDidMount`. The codebase you're reading uses function components with hooks throughout.
+A modern React function component is a JavaScript or TypeScript function that
+React calls to determine what a part of the UI should look like:
 
-### Why components?
-
-- **Composition** — small components nest to make bigger UIs. `REPL` is one big component, but it composes smaller ones like `<PromptInput>`, `<CommandKeybindingHandlers>`, etc.
-- **Reusability** — write once, render many times with different props.
-- **Reactivity** — when props/state change, React re-runs the function and updates the screen automatically.
-
----
-
-## How is it rendered?
-
-React's rendering has three phases. Using REPL as the running example:
-
-### Phase 1: Mount — first render
-
-Something has to **mount** the root component. In a normal React app, you'd write:
-
-```jsx
-const root = ReactDOM.createRoot(document.getElementById('app'))
-root.render(<REPL />)
+```tsx
+function Greeting({ name }: { name: string }) {
+  return <Text>Hello, {name}</Text>
+}
 ```
 
-That single `render(<REPL />)` call starts everything. claude-code is a TUI, so instead of `ReactDOM` it uses **Ink** (`import { render } from 'ink'` or similar) as the renderer — same React, but the output goes to terminal cells instead of DOM nodes. Ink uses Yoga for layout. The point is: *some* renderer somewhere calls your function for the first time.
+A component normally:
 
-### Phase 2: Render — running the function
+1. receives inputs through props;
+2. reads state, context, refs, or external stores through Hooks;
+3. calculates its output; and
+4. returns React nodes, often written as JSX.
 
-React calls `REPL(props)`. Inside, your function:
+Rendering code should be pure: given the same props, state, and context, it
+should calculate the same output. Event handlers and Effects are the usual
+places for side effects.
 
-- Reads props
-- Calls hooks (e.g. `useState` returns the current state, `useSyncExternalStore` reads the latest query-guard status)
-- Computes values
-- Returns JSX describing the UI
+JSX creates **React element objects**. It does not create terminal cells and it
+does not call a component immediately. For example:
 
-That JSX is **not** real DOM. It's a description — an object tree like:
-
-```js
-{ type: 'div', props: { children: [
-  { type: PromptInput, props: { onSubmit, vimMode, ... } },
-  ...
-] } }
+```tsx
+const element = <REPL {...replProps} />
 ```
 
-(You can actually `console.log(<REPL />)` to see the plain object.)
+Conceptually, `element` contains `REPL` as its `type` and `replProps` as its
+props. Passing it to a root tells React to render it later. Logging this element
+can show the element descriptor, but does not execute `REPL` or reveal the JSX
+tree that `REPL` will return.
 
-### Phase 3: Commit — apply to the renderer
+Function components also existed before Hooks. Before Hooks, a function
+component could render from props, but state and lifecycle features generally
+required a class component. Class components remain supported, although this
+code primarily composes function components and Hooks.
 
-React takes that virtual tree and hands it to the renderer (ReactDOM for browser, Ink for terminal). The renderer:
+## What makes a function a Hook?
 
-1. **Reconciles** — compares the new tree with the previous one (if any) to find the minimal set of changes
-2. **Commits** — applies those changes to whatever the output target is (DOM nodes in a browser, terminal cells in a TUI)
+A Hook participates in React's per-component hook lifecycle. Built-in Hooks
+include `useState`, `useEffect`, and `useSyncExternalStore`. A function such as
+`useAppState` is a custom Hook because it calls other Hooks.
 
-### Subsequent renders
+The recovered `REPL` shows both kinds of external-store read:
 
-After mount, React **re-runs your function** when:
+```tsx
+// Custom Hook: selects AppState fields through useSyncExternalStore internally.
+const toolPermissionContext = useAppState(s => s.toolPermissionContext)
+const tasks = useAppState(s => s.tasks)
 
-- A `useState` setter is called
-- A `useReducer` dispatch happens
-- A parent passes new props
-- A `useSyncExternalStore` snapshot changes (this is the case for `isQueryActive` and `queueSnapshot` in REPL)
-- A `useContext` value changes
+// Built-in Hook used directly for the local query lifecycle store.
+const isQueryActive = React.useSyncExternalStore(
+  queryGuard.subscribe,
+  queryGuard.getSnapshot,
+)
+```
 
-Each re-run produces a new JSX tree, React diffs it against the old one, and the renderer patches the output. **Your function doesn't know or care** that this is happening — it just runs, returns a description, and React handles the rest.
+Calling `store.getState()` alone is not a Hook: it is just an ordinary read and
+does not subscribe the component. Hooks must be called at the top level of a
+component or another Hook so React can associate each call with a stable hook
+slot.
 
-### What "rendering" specifically means in REPL's context
+For `useAppState`, the store broadcasts every successful state change to all
+listeners. Each Hook instance supplies its own selector-backed snapshot, and
+React uses `Object.is` to decide whether that selected result changed. The
+store's listener registry itself does not distinguish slices. See
+[`STATE_AND_RENDERING.md`](STATE_AND_RENDERING.md) for the full flow.
 
-For this codebase, since it uses Ink:
+## How the main `REPL` tree is mounted
 
-1. Ink renders REPL into a terminal buffer
-2. Each render produces Yoga-computed layout (which cells each character occupies)
-3. Ink writes only the diff to stdout — so typing in the input field doesn't redraw the whole transcript, only the input row
-4. State changes (Enter pressed, query finished, queue mutation) propagate via hooks → re-render → terminal patch
+This program uses its recovered, customized Ink implementation under
+`restored-src/src/ink/`, not ReactDOM and not merely an opaque `render` import
+from an npm package.
 
-That's why the patterns we discussed earlier matter: `useSyncExternalStore` and signals are the bridges that let **non-React events** (a user pressing Enter, a queue mutation, a query-guard transition) trigger React re-renders, which then get re-painted to the terminal.
+The main path is:
+
+```text
+main.tsx
+  createRoot(renderOptions)
+       ↓
+replLauncher.tsx
+  <App {...appProps}>
+    <REPL {...replProps} />
+  </App>
+       ↓
+interactiveHelpers.tsx
+  renderAndRun(root, element)
+       ↓
+  root.render(element)
+```
+
+`<App>` supplies the app-state, statistics, and FPS contexts around `REPL`.
+The wrapper in `src/ink.ts` also adds the theme provider before forwarding the
+tree to the Ink root.
+
+`root.render(...)` triggers the initial render. **Mounting** means that this is
+the first time a component instance is added to the tree; mount is not a
+separate step alongside React's render and commit steps.
+
+## Trigger, render, and commit
+
+React describes a screen update in three steps: **trigger, render, commit**.
+
+### 1. Trigger
+
+The initial `root.render(element)` triggers the first render. Later work can be
+triggered when, for example:
+
+- a state setter receives a value React treats as changed;
+- an ancestor renders and reaches this component again;
+- a consumed Context value changes; or
+- a `useSyncExternalStore` snapshot changes.
+
+Calling a setter does not guarantee a visible terminal change. React can bail
+out when state is unchanged, components can be memoized, and a render can
+produce the same host output as before.
+
+### 2. Render
+
+React calls the necessary function components to calculate the next tree. For
+`REPL`, that means reading its props, running its Hooks in order, calculating
+derived values, and reaching its returned `mainReturn` tree.
+
+Rendering and reconciliation happen before host mutations are committed.
+React determines how the new element tree differs from the current fiber and
+host trees. It may also render descendants; a parent render does not imply that
+every terminal cell will change.
+
+### 3. Commit
+
+React's custom reconciler applies the required mutations to Ink host nodes.
+In this recovered Ink implementation, Yoga layout is calculated during the
+commit path so layout effects can observe current layout data.
+
+Effects such as `useEffect` run outside the pure render calculation. The
+lifecycle logging near the beginning of `REPL`, for example, is implemented as
+an Effect with a cleanup function. Because that Effect depends on `disabled`,
+its cleanup runs both before an Effect re-run caused by a changed `disabled`
+value and when the component unmounts.
+
+## From the committed Ink tree to terminal output
+
+After React updates the Ink host tree, the terminal renderer performs more
+work:
+
+1. Yoga calculates positions and sizes for the host nodes.
+2. Ink paints the laid-out nodes into a cell-based screen buffer.
+3. It compares the new frame with the previous frame, using damage tracking
+   and cached regions where possible.
+4. It emits the required terminal control sequences and changed cell data.
+
+This frame diff is distinct from React reconciliation. React decides how to
+update the component and host trees; Ink later decides how to update the
+physical terminal from its screen buffers.
+
+It is therefore too strong to say that typing always redraws "only the input
+row." The implementation attempts incremental terminal updates, but layout
+shifts, overlays, resize events, fullscreen transitions, or damage recovery can
+require a wider patch or full reset. Likewise, a component can re-render even
+when the terminal diff is empty.
+
+The complete path is:
+
+```text
+event or store update
+  → React update is triggered
+  → components render and reconcile
+  → Ink host mutations commit
+  → Yoga computes layout
+  → Ink paints a screen buffer
+  → terminal frames are diffed
+  → escape sequences and changed cells are written
+```
+
+For the app-specific state subscription details, continue with
+[`STATE_AND_RENDERING.md`](STATE_AND_RENDERING.md). For the general React model,
+the official React guides on
+[components](https://react.dev/learn/your-first-component),
+[render and commit](https://react.dev/learn/render-and-commit), and
+[element creation](https://react.dev/reference/react/createElement) use the
+same terminology.

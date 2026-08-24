@@ -2,7 +2,7 @@
 
 This document explains how React state flows and how re-renders happen, using `restored-src/src/state/*` as the running example. It's written for engineers who have used Node/TypeScript but haven't internalized how React works under the hood.
 
-You should read it linearly — Part 1 builds the mental model from scratch, then Part 2 walks through `AppStateStore`'s actual code, then Part 3 walks the full lifecycle of the store, then Part 4 does a concrete end-to-end trace of one field (`toolPermissionContext`). Part 5 is a compiled → readable translator for the React Compiler output you see in `*.tsx` files, and Part 6 is a quick-reference table.
+You should read it linearly — Part 1 builds the mental model from scratch, then Part 2 walks through `AppStateStore`'s actual code, then Part 3 walks the full lifecycle of the store, then Part 4 does a concrete end-to-end trace of one field (`toolPermissionContext`). Part 5 explains the recovered TSX's provenance, and Part 6 is a quick-reference table.
 
 ---
 
@@ -111,14 +111,14 @@ Three things to internalise:
 - **`<MyContext.Provider value={…}>`** publishes the value to all descendants.
 - **`useContext(MyContext)`** walks up the fiber tree from the calling component until it finds the nearest `Provider` ancestor, and returns whatever was passed to its `value` prop.
 
-This is precisely what `state/AppState.tsx:27` does:
+This is precisely what `state/AppState.tsx:47` does:
 
 ```tsx
-// state/AppState.tsx:27
+// state/AppState.tsx:47
 export const AppStoreContext = React.createContext<AppStateStore | null>(null)
 ```
 
-…and what `<AppStateProvider>` will later do to publish the store (line 102):
+…and what `<AppStateProvider>` will later do to publish the store (lines 112–120):
 
 ```tsx
 <AppStoreContext.Provider value={store}>
@@ -129,7 +129,7 @@ export const AppStoreContext = React.createContext<AppStateStore | null>(null)
 …and what `useAppStore` does to read it:
 
 ```tsx
-// state/AppState.tsx:117-124
+// state/AppState.tsx:123-132
 function useAppStore(): AppStateStore {
   const store = useContext(AppStoreContext)
   if (!store) {
@@ -174,12 +174,12 @@ That's the bridge to the next idea.
 
 ---
 
-### 1.5 External stores + slice subscriptions — the second fix
+### 1.5 External stores + selected snapshots — the second fix
 
 The project's solution combines two ideas:
 
 1. **Move the value out of React's memory** into a plain JavaScript object — a "mailbox." The mailbox has its own subscribers list.
-2. **Read it from React via `useSyncExternalStore`**, which wraps a foreign store and lets each consumer subscribe to *only the slice they care about*.
+2. **Read it from React via `useSyncExternalStore`**, which wraps a foreign store and lets each consumer expose the slice it cares about as that hook instance's snapshot.
 
 Here's the actual mailbox from `state/store.ts:10-34`:
 
@@ -220,10 +220,10 @@ export function createStore<T>(initialState: T, onChange?: OnChange<T>): Store<T
 
 Three primitives, all of them plain JS. No React involved.
 
-The `setState` flow has two parts, which is the entire cleverness of the design:
+The `setState` flow has two parts:
 
 - Line `onChange?.(...)` — *before* notifying subscribers, run an optional callback with the old and new state. This is where persistence, analytics, sync-to-cloud, clearing caches, etc. all live.
-- Line `for (const listener of listeners) listener()` — *after* `onChange`, walk every subscriber and tell them "the value changed." In React, each subscriber is owned by one hook instance inside one component, so React can decide independently whether that component needs to re-render.
+- Line `for (const listener of listeners) listener()` — *after* `onChange`, walk every subscriber and tell them "the store changed." This is a broadcast: the store has no selectors and does not know which slice each subscriber reads. Each React listener then checks its own selected snapshot and React decides independently whether that hook's component needs to re-render.
 
 Why an `Object.is` bail at the top? If your updater returns the same reference (e.g. `prev => prev` because nothing matched the conditions), no listeners get woken up and no React re-renders happen. Cheap skip for the common "nothing changed" case.
 
@@ -236,7 +236,7 @@ Why an `Object.is` bail at the top? If your updater returns the same reference (
 That's `useSyncExternalStore`, React's official hook for "subscribe to an outside-the-React store":
 
 ```tsx
-// state/AppState.tsx:142-163 (de-Compiler-ified for readability)
+// state/AppState.tsx:150-167 (build-target guard omitted here)
 export function useAppState<T>(selector: (state: AppState) => T): T {
   const store = useAppStore()
   const get = () => {
@@ -251,31 +251,33 @@ export function useAppState<T>(selector: (state: AppState) => T): T {
 What `useSyncExternalStore(subscribe, getSnapshot)` does internally:
 
 1. During the first render, it calls `getSnapshot()` to read the current value.
-2. It calls `subscribe(onStoreChange)` where `onStoreChange` is React's internal callback that says "this component is now stale, schedule a re-render."
-3. **On every re-render**, before committing, React calls `getSnapshot()` again. If it returns a different reference than last time, React renders the new value; if same, it can bail out without re-rendering.
+2. It calls `subscribe(onStoreChange)`. When the store broadcasts a change, React's callback calls the current `getSnapshot()` and compares its result with the snapshot remembered by this hook instance using `Object.is`.
+3. If the selected snapshot is unchanged, this subscription does not schedule a re-render. If it changed, React schedules the component and reads the snapshot again while rendering.
 4. **At unmount**, the function returned by `subscribe` is called to remove the listener.
 
-The `subscribe(onStoreChange)` call is what wire this particular `useAppState` into the store's `listeners` set. Two different `useAppState` calls in different components each own their own listener — independent subscriptions.
+The `subscribe(onStoreChange)` call is what wires this particular `useAppState` hook instance into the store's `listeners` set. Two different `useAppState` calls own independent listeners, even if they are in the same component. The distinction between their slices lives in their separate `get` closures, not in the store's registry.
 
 So now:
 
 ```tsx
 function Toolbar() {
-  const verbose = useAppState(s => s.verbose)   // subscribes to state.verbose
+  const verbose = useAppState(s => s.verbose)   // selects state.verbose
 }
 function ModelPicker() {
-  const model = useAppState(s => s.mainLoopModel)  // subscribes to state.mainLoopModel
+  const model = useAppState(s => s.mainLoopModel)  // selects state.mainLoopModel
 }
 ```
 
 A `setState` that touches only `verbose` will:
-- run `onChange`
-- wake up React's listener for `Toolbar` only
-- `ModelPicker` stays asleep because its `useAppState` was never woken
 
-That's the per-slice rendering win.
+- run `onChange`;
+- invoke both registered listeners because the store broadcasts every successful change;
+- make React evaluate `Toolbar`'s snapshot and detect that `verbose` changed; and
+- make React evaluate `ModelPicker`'s snapshot, see the same `mainLoopModel`, and skip a render from that subscription.
 
-**One snapshot per render.** A second guarantee of `useSyncExternalStore` is consistency inside a single render:
+That's the per-slice rendering win: notification is global, but React's snapshot comparison is per hook instance.
+
+**Consistent snapshots.** A second guarantee of `useSyncExternalStore` is that React checks external-store snapshots for consistency around a render:
 
 ```tsx
 function Toolbar() {
@@ -285,7 +287,7 @@ function Toolbar() {
 }
 ```
 
-If you called `store.getState()` directly in both slots, the `(a)` and `(b)` reads could in theory span a `setState` and return different states — *tearing*. With `useSyncExternalStore`, React captures **one** value of the store at the start of the render and the selectors both run against that captured snapshot. If anything changes the store during the render, React discards the rendered output and re-runs the component against the new value. The user never sees an inconsistent combo.
+If you called `store.getState()` directly, React would not know that those reads depend on an external store and could not validate them before commit. Each `useAppState` call here has its own selected snapshot; React does not put one captured `AppState` into the store's listener registry. Instead, `useSyncExternalStore` lets React recheck the snapshots and retry the render if the store changes at an unsafe point, preventing a torn committed UI.
 
 ---
 
@@ -409,10 +411,10 @@ This is the most important file for understanding how state interacts with rende
 - The `<AppStateProvider>` component
 - Five hooks: `useAppStore`, `useAppState`, `useSetAppState`, `useAppStateStore`, `useAppStateMaybeOutsideOfProvider`
 
-Most of it is React Compiler output (the `_c`, `$`, `t0`/`t1`/`…` machinery — see Part 5 for the readable equivalents). The de-Compilerified version of the provider is:
+The nested source-map recovery has restored this file to readable TypeScript/TSX. The source below is therefore a lightly annotated excerpt of the recovered file, not a hand-decompiled translation:
 
 ```tsx
-// state/AppState.tsx:37-110 (de-Compilerified)
+// state/AppState.tsx:57-121 (lightly annotated)
 export function AppStateProvider({
   children,
   initialState,
@@ -445,7 +447,12 @@ export function AppStateProvider({
       logForDebugging(
         'Disabling bypass permissions mode on mount (remote settings loaded before mount)',
       )
-      store.setState(_temp)  // _temp is the helper below
+      store.setState(prev => ({
+        ...prev,
+        toolPermissionContext: createDisabledBypassPermissionsContext(
+          prev.toolPermissionContext,
+        ),
+      }))
     }
     // eslint-disable-next-line ...
   }, [])
@@ -467,19 +474,12 @@ export function AppStateProvider({
     </HasAppStateContext.Provider>
   )
 }
-
-function _temp(prev: AppState) {
-  return {
-    ...prev,
-    toolPermissionContext: createDisabledBypassPermissionsContext(prev.toolPermissionContext),
-  }
-}
 ```
 
 And the consumers:
 
 ```tsx
-// state/AppState.tsx:117-124 (de-Compilerified)
+// state/AppState.tsx:123-132
 function useAppStore(): AppStateStore {
   // eslint-disable-next-line react-hooks/rules-of-hooks
   const store = useContext(AppStoreContext)
@@ -491,7 +491,7 @@ function useAppStore(): AppStateStore {
   return store
 }
 
-// state/AppState.tsx:142-163
+// state/AppState.tsx:150-167 (build-target guard omitted here)
 export function useAppState<T>(selector: (state: AppState) => T): T {
   const store = useAppStore()
   const get = () => {
@@ -502,17 +502,17 @@ export function useAppState<T>(selector: (state: AppState) => T): T {
   return useSyncExternalStore(store.subscribe, get, get)
 }
 
-// state/AppState.tsx:170-172
+// state/AppState.tsx:174-178
 export function useSetAppState() {
   return useAppStore().setState
 }
 
-// state/AppState.tsx:177-179
+// state/AppState.tsx:183-185
 export function useAppStateStore() {
   return useAppStore()
 }
 
-// state/AppState.tsx:186-199 — a fallback for callers that may be rendered
+// state/AppState.tsx:193-200 — a fallback for callers that may be rendered
 // outside the provider; returns undefined if there's no store.
 export function useAppStateMaybeOutsideOfProvider<T>(selector: (state: AppState) => T): T | undefined {
   const store = useContext(AppStoreContext)
@@ -661,7 +661,7 @@ Lazy imports so the modules don't load until an interactive command is actually 
 ### 3.3 Mount — `components/App.tsx` is where `<AppStateProvider>` is actually mounted
 
 ```tsx
-// components/App.tsx:19-55 (de-Compilerified)
+// components/App.tsx:19-37 (recovered source)
 export function App({ getFpsMetrics, stats, initialState, children }: Props): React.ReactNode {
   return (
     <FpsMetricsProvider getFpsMetrics={getFpsMetrics}>
@@ -724,7 +724,7 @@ What each step really does, in plain terms:
 
 ### 3.5 Publication — Context delivers the store reference
 
-When Step 5 commits, React records "the current value of `AppStoreContext` at this fiber is `store`." This is a static lookup — the *value* never changes (because the store reference is stable), so React never has to re-render anything because of Context changes.
+When Step 5 commits, React records "the current value of `AppStoreContext` at this fiber is `store`." The *value* never changes during this provider's lifetime (because the store reference is stable), so React never has to re-render consumers because of a Context value change. This is not a module-level singleton: another root with another `<AppStateProvider>` gets another store.
 
 When a descendant calls `useAppStore()`:
 
@@ -757,9 +757,9 @@ What happens under the hood:
 
 - React stores `get` as "this hook instance's `getSnapshot`."
 - React calls `store.subscribe(reactInternal_onStoreChange)`, which adds a listener to the store.
-- The component now has one subscription. If `useAppState(s => s.verbose)` ran in a different component, that's a *second* subscription, separate.
+- This hook instance now has one subscription. Another `useAppState(s => s.verbose)` call—whether in this component or another one—creates a second subscription.
 
-These per-component subscriptions are the magic that lets unrelated components ignore unrelated changes.
+Every subscription receives the same store broadcast. Their separate `get` closures produce separate selected snapshots, allowing React to ignore notifications whose selected result did not change.
 
 ### 3.7 Mutation — the spread-and-replace pattern
 
@@ -820,7 +820,7 @@ Two patterns to internalise:
 1. **All-or-nothing replacement.** Each `setState` callback returns a *new* object. Even if you only changed a deeply-nested field, every level of nesting above it gets a new object reference. This is the cost of `Object.is` bail-outs and react-bail render-skipping — but you get the savings when *no* change is needed.
 2. **Bail-out returns.** Returning `prev` (same reference) skips both the `onChange` call *and* the listener notification. That's how the `enterTeammateView` example above avoids waking subscribers when no real change happened. The pattern matters: even `setAppState(prev => prev)` with explicit reads is no-op safe, because `store.ts`'s `Object.is(next, prev)` catches it at the top of `setState` anyway.
 
-### 3.8 Notification — listeners fire, React schedules re-renders
+### 3.8 Notification — listeners fire, React checks snapshots
 
 Inside `store.setState`:
 
@@ -832,24 +832,25 @@ for (const listener of listeners) listener()       // ③ notify each subscriber
 
 What each `listener` actually is:
 
-- For each component that called `useAppState(s => s.x)`, the listener is a tiny React callback that says "this component is stale, schedule a re-render."
-- Multiple components with the same selector each have their own listener. Each is fired independently.
-- A component that calls `useAppState` for `toolPermissionContext` but not for `verbose` will receive a "stale" mark only when `toolPermissionContext` changes — *not* when `verbose` changes.
+- Each `useAppState(s => s.x)` hook instance registers a React callback. The callback tells React to check that hook's current selected snapshot.
+- The store calls every registered callback after every successful state change. It neither stores selectors nor compares slices.
+- Multiple hook instances with the same selector each have their own listener. A component with multiple `useAppState` calls has multiple listeners.
+- If only `verbose` changes, a listener selecting `toolPermissionContext` is still called. React runs its `getSnapshot`, finds the same object via `Object.is`, and does not schedule a render from that subscription.
 
 Important ordering: **side-effects (②) run before listeners (③).** So `onChangeAppState` writes settings files, clears caches, notifies the cloud, etc. *before* any React component sees the new state. This means that by the time React re-renders, the persisted state and the in-memory state agree.
 
 ### 3.9 Re-render — `useSyncExternalStore` reads fresh, React bails if same
 
-For each component that was marked stale:
+For each listener notification:
 
-1. React calls the component function top-to-bottom. *Every* line in the function runs.
-2. `useAppState(s => s.toolPermissionContext)` calls `useSyncExternalStore`, which calls `get()`.
-3. `get()` reads `store.getState()` and runs the selector against it.
-4. The result is compared to the last snapshot via `Object.is`. If same → React bails out for this hook (the component re-runs but the snapshot is unchanged, so downstream `useMemo` etc. see stable inputs). If different → React uses the new value as the new snapshot.
-5. After *all* hooks in the component have settled on their snapshots, React renders the JSX.
+1. React calls that hook instance's `getSnapshot` (`get` in `useAppState`).
+2. `get()` reads `store.getState()` and runs the selector.
+3. React compares the selected result with that hook's previous snapshot via `Object.is`.
+4. If it is the same, no render is scheduled by this subscription. The component does not first need to re-run to discover that the slice is unchanged.
+5. If it differs, React schedules the component. During the render React calls the component top-to-bottom and reads its external-store snapshots again.
 6. The React reconciler diffs the new tree against the old and tells the renderer (Ink) to redraw only the changed parts.
 
-Step 4 is the "only re-render if your slice actually changed" guarantee. Step 6 is how the screen updates without anyone having to call `screen.draw()` themselves.
+Steps 1–4 are the "only re-render if your slice actually changed" behavior. Step 6 is how the screen updates without anyone having to call `screen.draw()` themselves.
 
 ### 3.10 Death — provider unmounts, store disappears
 
@@ -875,7 +876,7 @@ Let's pick one field and trace every step it goes through when the user Shift+Ta
 const toolPermissionContext = useAppState(s => s.toolPermissionContext)
 ```
 
-That's the one slice this component subscribes to. Whenever `toolPermissionContext`'s reference changes (a new object), `<REPL />` re-renders. Otherwise it doesn't.
+This hook subscribes to the whole store's broadcast but exposes `toolPermissionContext` as its snapshot. Whenever that object's reference changes, this subscription causes `<REPL />` to re-render. If another field changes while this reference remains identical, React's snapshot comparison skips a render from this subscription.
 
 **Read sites inside `<REPL>`** (a few examples from §2.3 of the parts I've already covered in this conversation):
 
@@ -896,138 +897,49 @@ That's the one slice this component subscribes to. Whenever `toolPermissionConte
    - `prevMode` ≠ `newMode` → the `permission_mode` block runs.
    - `notifySessionMetadataChanged(...)` writes to the cloud dashboard.
    - `notifyPermissionModeChanged(...)` notifies the SDK stream.
-6. `store.setState` walks `listeners` and calls each one. Inside `<REPL>`, the listener is React's `onStoreChange` registered by `useSyncExternalStore`. Same for every other component reading `toolPermissionContext` (e.g. `PromptInput`).
-7. React marks those components stale, schedules a render.
-8. React runs `<REPL>` again, top to bottom. Line 618's `useAppState` calls `get()` → reads `next` → sees `s.toolPermissionContext` has a new reference → returns the new value.
-9. React re-renders `<REPL>`'s JSX with the new value. Lines 696/811/1617/2770 all see the new mode and behave accordingly.
-10. `PromptInput` (which also subscribes via the `toolPermissionContext` prop) goes through the same steps 8–9.
+6. `store.setState` walks `listeners` and calls every one, including listeners whose selectors read unrelated fields such as `tasks`.
+7. Each React listener calls its hook instance's `getSnapshot`. The `<REPL>` hook selects the new `toolPermissionContext` object, which is not `Object.is`-equal to its previous snapshot, so React schedules `<REPL>`.
+8. A hook selecting the unchanged `tasks` object also checks its snapshot, but React does not schedule a render from that subscription.
+9. React runs `<REPL>` again, top to bottom. Line 618's `useAppState` reads the new selected value.
+10. React re-renders `<REPL>`'s JSX with the new value. Lines 696/811/1617/2770 all see the new mode and behave accordingly. Descendants receiving changed props update through normal React reconciliation; components with their own `useAppState` calls perform their own snapshot comparisons.
 
-**No observers:** any component that subscribed to, say, `tasks` did *not* receive a stale mark because their `useSyncExternalStore` listener wasn't fired — the store calls only the listeners for components that subscribed to a slice whose reference changed.
+**Unchanged observers:** components selecting `tasks` are notified at the store level, but their selected snapshot remains equal, so those subscriptions do not cause renders.
 
-**"One snapshot per render":** within `<REPL>`'s render, every `useAppState` call reads against the same captured store state. If `setAppState` fired during the render (it can't here, but in general), React would discard the output and re-run.
+**Snapshot consistency:** every `useAppState` call has its own snapshot function. React rechecks those external-store snapshots around rendering and retries when necessary rather than relying on one slice-aware store subscription.
 
 ---
 
-## Part 5: Reading React Compiler output
+## Part 5: Recovered TSX and provenance
 
-`restored-src/src/*.tsx` files contain output from Facebook's React Compiler — a tool that rewrites ordinary components into a memoized form using a manual dependency cache. You see this as `_c`, `$`, `t0/t1/…`, and `Symbol.for("react.memo_cache_sentinel")`. It's not source code in the normal sense. Read it as **"the original component is here somewhere; the compiler filled in this boilerplate to make it faster."**
+The affected TSX files under `restored-src/` are now readable recovered
+TypeScript/TSX. In particular, `state/AppState.tsx` no longer contains React Compiler cache
+machinery such as `_c(...)`, `$[...]`, or
+`react.memo_cache_sentinel`. Read that file directly; the examples in this
+guide are excerpts or abridgements of the recovered source.
 
-The pattern is always the same. Given the original component:
+Why older notes showed compiler output:
 
-```tsx
-function AppStateProvider({ children, initialState, onChangeAppState }) {
-  const hasAppStateContext = useContext(HasAppStateContext)
-  if (hasAppStateContext) throw new Error('...nested...')
+1. The first reconstruction pass used the outer `package/cli.js.map`.
+2. Some outer `sourcesContent` entries were themselves React Compiler output
+   with inline nested source maps.
+3. The nested recovery pass decoded those maps and replaced 552 destinations
+   under `restored-src/` with their embedded readable sources. Of those, 395
+   outer entries contained React Compiler output; none of their current nested
+   candidates retains the cache machinery.
 
-  const [store] = useState(() => createStore(initialState ?? getDefaultAppState(), onChangeAppState))
+`state/AppState.tsx` was one of those destinations. It was initially skipped
+because it had a manual post-recovery edit, then restored after explicit
+overwrite approval. Its recovered generic signatures now include
+`useAppState<T>` and `useAppStateMaybeOutsideOfProvider<T>`.
 
-  useEffect(() => { ...race fix... }, [])
-
-  const onSettingsChange = useEffectEvent(source => applySettingsChange(source, store.setState))
-  useSettingsChange(onSettingsChange)
-
-  return (
-    <HasAppStateContext.Provider value={true}>
-      <AppStoreContext.Provider value={store}>
-        <MailboxProvider><VoiceProvider>{children}</VoiceProvider></MailboxProvider>
-      </AppStoreContext.Provider>
-    </HasAppStateContext.Provider>
-  )
-}
-```
-
-…the Compiler emits:
-
-```tsx
-export function AppStateProvider(t0) {
-  const $ = _c(N)
-  const { children, initialState, onChangeAppState } = t0
-  const hasAppStateContext = useContext(HasAppStateContext)
-  if (hasAppStateContext) throw new Error('AppStateProvider can not be nested within another AppStateProvider')
-
-  let t1
-  if ($[0] !== initialState || $[1] !== onChangeAppState) {
-    t1 = () => createStore(initialState ?? getDefaultAppState(), onChangeAppState)
-    $[0] = initialState
-    $[1] = onChangeAppState
-    $[2] = t1
-  } else {
-    t1 = $[2]
-  }
-  const [store] = useState(t1)
-
-  let t2
-  if ($[3] !== store) {
-    t2 = () => { /* race-fix effect body */ }
-    $[3] = store
-    $[4] = t2
-  } else {
-    t2 = $[4]
-  }
-  let t3
-  if ($[5] === Symbol.for('react.memo_cache_sentinel')) {
-    t3 = []
-    $[5] = t3
-  } else {
-    t3 = $[5]
-  }
-  useEffect(t2, t3)
-
-  let t4
-  if ($[6] !== store.setState) {
-    t4 = source => applySettingsChange(source, store.setState)
-    $[6] = store.setState
-    $[7] = t4
-  } else {
-    t4 = $[7]
-  }
-  const onSettingsChange = useEffectEvent(t4)
-  useSettingsChange(onSettingsChange)
-
-  let t5
-  if ($[8] !== children) {
-    t5 = <MailboxProvider><VoiceProvider>{children}</VoiceProvider></MailboxProvider>
-    $[8] = children
-    $[9] = t5
-  } else {
-    t5 = $[9]
-  }
-
-  let t6
-  if ($[10] !== store || $[11] !== t5) {
-    t6 = <HasAppStateContext.Provider value={true}>
-            <AppStoreContext.Provider value={store}>{t5}</AppStoreContext.Provider>
-          </HasAppStateContext.Provider>
-    $[10] = store
-    $[11] = t5
-    $[12] = t6
-  } else {
-    t6 = $[12]
-  }
-  return t6
-}
-```
-
-The translation rules:
-
-| Compiler output | Means |
-|---|---|
-| `const $ = _c(N)` | Allocate an N-slot memo cache for this component. |
-| `const { ... } = t0` | The component argument is now named `t0` because the compiler renames everything to keep dependency-tracking deterministic. |
-| `let t1; if ($[0] !== X \|\| $[1] !== Y) { t1 = ...; $[0] = X; $[1] = Y; $[2] = t1 } else { t1 = $[2] }` | "If dependencies X and Y changed since last render, recompute the closure and stash it in slot 2; else reuse slot 2." Replaces what would normally be `const t1 = ...` per render. |
-| `if ($[5] === Symbol.for('react.memo_cache_sentinel')) { t3 = []; $[5] = t3 } else { t3 = $[5] }` | First render: allocate an empty array. Later renders: reuse it. Standard pattern for a fresh-empty-each-mount value like `useEffect`'s empty deps. |
-| `let t4; if ($[6] !== store.setState) { t4 = useEffectEvent(...); ... }` | Inline `useEffectEvent` wrapped in memoization because the callback's identity would otherwise change every render. |
-
-When you see Compiler output, what to do mentally:
-
-1. **Ignore `t0/t1/...`, `_c`, `$`, and the cache-sentinel Symbol.** They're memory-cell plumbing.
-2. **For each `let tK; if (...) { ... } else { ... }` block, look at the inner block** — that's the original `const` declaration. The outer `if` is just "recompute or reuse."
-3. **Look at the final `return` chain** — the deeply nested `let t6 = <ProviderX><ProviderY>...</ProviderY></ProviderX>` is just the original `return (...)`.
-4. **For `useEffectEvent(fn)` blocks**, the surrounding compiler code is "stable callback identity." The function being captured is the original.
-
-The Compiler output also leaves an inline base64 source map at the bottom of each `.tsx` file — the trailing `//# sourceMappingURL=data:application/json;charset=utf-8;base64,eyJ2ZXJzaW9uIjp...` is how the runtime knows where the original TypeScript came from.
-
-If decompiling by hand gets tedious, the source map's embedded `sourcesContent` field has the original readable TypeScript. From `state/AppState.tsx`'s source map, the `sourcesContent[0]` decodes to exactly the form shown in the "original component" example at the top of this section.
+This is still an unofficial recovery from released source-map evidence. The
+readable files and their paths are useful for research, but are not
+authoritative upstream source truth. For the audit procedure, safety rules,
+counts, hashes, and manifest format, see
+[`NESTED_SOURCE_MAP_RECOVERY.md`](NESTED_SOURCE_MAP_RECOVERY.md) and
+`restored-src/source-recovery-manifest.json`. The released `package/cli.js`
+and `package/cli.js.map` remain unchanged; inspect those artifacts only when
+you specifically need the compiled representation.
 
 ---
 
@@ -1041,13 +953,13 @@ If decompiling by hand gets tedious, the source map's embedded `sourcesContent` 
 | Where is `createStore` defined? | `state/store.ts` | 10–34 |
 | What's in `AppState`? | `state/AppStateStore.ts` | 89–452 |
 | Where does a blank `AppState` come from? | `state/AppStateStore.ts` | 456–569 |
-| Where are the two Contexts declared? | `state/AppState.tsx` | 27, 36 |
-| Where is `<AppStateProvider>` defined? | `state/AppState.tsx` | 37–110 |
-| Where is `useAppState` defined? | `state/AppState.tsx` | 142–163 |
-| Where is `useSetAppState`? | `state/AppState.tsx` | 170–172 |
-| Where is `useAppStateMaybeOutsideOfProvider`? | `state/AppState.tsx` | 186–199 |
+| Where are the two Contexts declared? | `state/AppState.tsx` | 47, 55 |
+| Where is `<AppStateProvider>` defined? | `state/AppState.tsx` | 57–121 |
+| Where is `useAppState` defined? | `state/AppState.tsx` | 150–167 |
+| Where is `useSetAppState`? | `state/AppState.tsx` | 174–178 |
+| Where is `useAppStateMaybeOutsideOfProvider`? | `state/AppState.tsx` | 193–200 |
 | What side effects run on every `setState`? | `state/onChangeAppState.ts` | 43–171 |
-| Where is the `<AppStateProvider>` mounted for the main session? | `components/App.tsx` | 29 |
+| Where is the `<AppStateProvider>` mounted for the main session? | `components/App.tsx` | 28 |
 | Where does the initial state come from? | `main.tsx:3134` (one of 6 sites) | — |
 | Where is the renderer (`renderAndRun`)? | `interactiveHelpers.tsx:98` | — |
 | Where is `<REPL>` reading toolPermissionContext? | `screens/REPL.tsx:618` | — |
@@ -1064,8 +976,8 @@ If decompiling by hand gets tedious, the source map's embedded `sourcesContent` 
 | `Object.is(a, b)` | The bail-out primitive for immutable updates. Same value = skip notification. |
 | `setState(prev => ({ ...prev, field: newField }))` | Immutable update — return a new object even if most fields are unchanged. |
 | `return prev` (from a `setState` updater) | The "nothing actually changed" bail — saves the `onChange` call and the listener pass. |
-| `useSyncExternalStore(subscribe, get, get)` | React's hook for "subscribe to an outside-the-React store, with one-snapshot-per-render guarantees." |
-| `_c(13)` and `$[n]` in a `.tsx` | React Compiler memo cache. See Part 5. |
+| `useSyncExternalStore(subscribe, get, get)` | Subscribe to the store's broadcast and let React compare this hook instance's selected snapshot. |
+| `_c(13)` and `$[n]` in a released artifact | React Compiler memo cache. The affected `restored-src/` files have been recovered; see Part 5. |
 | `feature('FOO')` | Bun's build-time flag. The chosen branch is the only one in the bundle. |
 | `if (false && expr)` / `{"external" === 'ant' && ...}` | Build-time guard, kept in source as a clue. Usually dead in the bundle you have. |
 
@@ -1075,9 +987,9 @@ If decompiling by hand gets tedious, the source map's embedded `sourcesContent` 
 2. **Compare.** `Object.is(next, prev)` — bail if no change.
 3. **Commit.** `state = next` inside the mailbox closure.
 4. **Side-effects.** `onChangeAppState({ newState, oldState })` — persistence + cloud sync + cache invalidation.
-5. **Notify.** Walk every listener; each `useSyncExternalStore` listener flags its component dirty.
+5. **Notify.** Walk every listener; each `useSyncExternalStore` listener checks its own selected snapshot and schedules its component only if that result changed.
 
-Then React re-renders the dirty components, each `useAppState` re-reads via its `get()`, the reconciler patches the renderer (Ink) only where needed.
+Then React re-renders the components with changed selected snapshots, each `useAppState` re-reads via its `get()`, and the reconciler patches the renderer (Ink) only where needed.
 
 ---
 
@@ -1085,7 +997,7 @@ Then React re-renders the dirty components, each `useAppState` re-reads via its 
 
 - **`restored-src/src/state/store.ts`** — the entire `Store<T>` interface in 34 lines. Read this first; everything else builds on it.
 - **`restored-src/src/state/AppStateStore.ts`** — the full `AppState` type. Skim the structure; it's long because the app's UI is huge.
-- **`restored-src/src/state/AppState.tsx`** — the React glue. Read with Part 5 open to translate the compiler output.
+- **`restored-src/src/state/AppState.tsx`** — the readable recovered React glue. Part 5 explains its source-map provenance.
 - **`restored-src/src/state/onChangeAppState.ts`** — what *every* state mutation triggers, in detail. Read the comments — they explain why each block exists.
 - **`restored-src/src/components/App.tsx`** — the single mount site for the live-session `<AppStateProvider>`.
 - **`restored-src/src/replLauncher.tsx`** — the 22-line function that wires `<App>` to `<REPL>` and mounts them on Ink.
