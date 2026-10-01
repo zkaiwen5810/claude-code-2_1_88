@@ -45,5 +45,5 @@
     "SHELL": "/usr/bin/zsh",
   },
 
-  "postCreateCommand": "bash -lc 'cd /workspaces/claude-code-2_1_88 && bash /tmp/post-create.sh'",
+  "postCreateCommand": ["bash", "/tmp/post-create.sh"]
 }
