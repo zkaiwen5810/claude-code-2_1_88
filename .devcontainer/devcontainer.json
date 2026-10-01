@@ -20,7 +20,7 @@
     },
   },
 
-  "runArgs": ["--env-file", "${localWorkspaceFolder}/.devcontainer.env"],
+  "runArgs": ["--env-file", "${localWorkspaceFolder}/.devcontainer.env", "--security-opt", "seccomp=unconfined"],
 
   "mounts": [
     "source=${localEnv:USERPROFILE}/.ssh,target=/home/node/.ssh,type=bind,readonly",

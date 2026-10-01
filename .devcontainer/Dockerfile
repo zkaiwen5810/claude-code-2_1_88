@@ -22,6 +22,8 @@ RUN apt-get update && apt-get install -y \
 # npm/pnpm/yarn/corepack
 ENV NPM_CONFIG_REGISTRY=https://registry.npmmirror.com/
 
+RUN npm config set registry "$NPM_CONFIG_REGISTRY" --location=global
+
 RUN corepack enable && corepack prepare pnpm@latest --activate
 
 # pip source mirror switch
